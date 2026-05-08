@@ -1,0 +1,2668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolution Live Casino</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0d0f17;
+  --bg-secondary: #141720;
+  --bg-card: #1a1e2e;
+  --bg-hover: #202436;
+  --accent-gold: #f0b429;
+  --accent-cyan: #00d4ff;
+  --accent-red: #e63946;
+  --text-primary: #ffffff;
+  --text-secondary: #8892a4;
+  --text-muted: #4a5568;
+  --border: rgba(255,255,255,0.06);
+  --nav-height: 60px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg-primary);color:var(--text-primary);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--nav-height);background:rgba(13,15,23,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;z-index:1000}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text-primary);display:flex;align-items:center;gap:6px;white-space:nowrap;cursor:pointer}
+.logo-icon{color:var(--accent-gold);font-size:20px}
+.search-box{flex:1;max-width:400px;margin-left:16px;position:relative}
+.search-box input{width:100%;background:rgba(255,255,255,0.07);border:1px solid var(--border);border-radius:8px;padding:8px 12px 8px 36px;color:var(--text-primary);font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s}
+.search-box input:focus{border-color:var(--accent-cyan)}
+.search-box::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;opacity:0.5}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.user-count{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary)}
+.balance{display:flex;align-items:center;gap:6px;background:rgba(240,180,41,0.15);border:1px solid rgba(240,180,41,0.3);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--accent-gold);user-select:none;-webkit-user-select:none;cursor:default}
+.menu-btn{background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:20px;padding:4px;transition:color 0.2s}
+.menu-btn:hover{color:var(--text-primary)}
+
+/* CAT NAV */
+.cat-nav{position:fixed;top:var(--nav-height);left:0;right:0;height:72px;background:rgba(13,15,23,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:999;overflow-x:auto;scrollbar-width:none}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-nav-inner{display:flex;align-items:center;justify-content:center;height:100%;padding:0 32px;gap:0;min-width:0;width:100%;box-sizing:border-box}
+.cat-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;cursor:pointer;border-radius:10px;transition:background 0.2s;flex:1;max-width:100px;min-width:0}
+.cat-item:hover{background:rgba(255,255,255,0.05)}
+.cat-item.active{background:rgba(0,212,255,0.08)}
+.cat-icon{font-size:20px;line-height:1}
+.cat-label{font-size:9.5px;color:var(--text-secondary);white-space:nowrap;font-weight:500;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center}
+.cat-item.active .cat-label{color:var(--accent-cyan)}
+.cat-item.active .cat-icon{filter:drop-shadow(0 0 6px var(--accent-cyan))}
+
+/* MAIN */
+.main{padding-top:calc(var(--nav-height) + 72px)}
+
+/* PAGE TRANSITION */
+.page{display:none}
+.page.active{display:block;animation:pageIn 0.3s ease}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* HERO */
+.hero{position:relative;height:420px;overflow:hidden;background:#0a0c14}
+.hero-slides{position:relative;width:100%;height:100%}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease}
+.hero-slide.active{opacity:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,15,23,0.9) 0%,rgba(13,15,23,0.2) 60%,transparent 100%)}
+.hero-content{position:absolute;bottom:80px;left:48px;max-width:380px}
+.hero-game-title{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:#fff;text-shadow:0 0 40px rgba(240,180,41,0.4);margin-bottom:8px}
+.hero-game-subtitle{font-size:12px;color:var(--text-secondary);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase}
+.hero-meta{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.hero-min-bet{font-size:13px;color:var(--accent-gold);font-weight:700}
+.hero-players{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text-secondary)}
+.hero-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#0d0f17;font-family:inherit;font-size:14px;font-weight:700;padding:12px 28px;border-radius:50px;border:none;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.hero-btn:hover{transform:scale(1.04);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.hero-nav-dots{position:absolute;bottom:20px;left:48px;display:flex;gap:6px}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:background 0.3s,width 0.3s}
+.dot.active{width:20px;border-radius:4px;background:var(--accent-cyan)}
+.hero-gradient-1{background:linear-gradient(135deg,#1a0a2e 0%,#0d1b3e 40%,#0a2a1a 100%)}
+.hero-gradient-2{background:linear-gradient(135deg,#2a0a0a 0%,#1a0d2e 60%,#0a1a2a 100%)}
+.hero-game-emoji{font-size:120px;position:absolute;right:15%;top:50%;transform:translateY(-50%);opacity:0.8;filter:drop-shadow(0 0 40px rgba(240,180,41,0.3));animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(-50%) translateY(0)}50%{transform:translateY(-50%) translateY(-16px)}}
+
+/* SECTION */
+.section{padding:32px 40px 0;animation:fadeUp 0.5s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.section-title{font-size:18px;font-weight:700;color:var(--text-primary)}
+.section-more{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text-secondary);cursor:pointer;transition:color 0.2s}
+.section-more:hover{color:var(--accent-cyan)}
+
+/* GAME CARD */
+.game-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform 0.25s,box-shadow 0.25s;position:relative;border:1px solid var(--border)}
+.game-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.5);border-color:rgba(0,212,255,0.2)}
+.game-card:hover .card-overlay{opacity:1}
+.game-card:hover .card-play-btn{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.card-thumb{width:100%;aspect-ratio:16/11;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden}
+.bg-red{background:linear-gradient(135deg,#2a0808,#5a1010)}
+.bg-blue{background:linear-gradient(135deg,#081a2a,#0d3a5a)}
+.bg-purple{background:linear-gradient(135deg,#1a0828,#3a0f5a)}
+.bg-green{background:linear-gradient(135deg,#071a0d,#0f3a1a)}
+.bg-gold{background:linear-gradient(135deg,#1a1008,#3a2a0a)}
+.bg-teal{background:linear-gradient(135deg,#071a1a,#0a3a3a)}
+.bg-dark{background:linear-gradient(135deg,#111318,#1a1e2a)}
+.bg-navy{background:linear-gradient(135deg,#08082a,#10105a)}
+.card-badge{position:absolute;top:8px;left:8px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;z-index:2}
+.badge-exclusive{background:rgba(240,180,41,0.2);color:var(--accent-gold);border:1px solid rgba(240,180,41,0.4)}
+.badge-new{background:rgba(230,57,70,0.2);color:var(--accent-red);border:1px solid rgba(230,57,70,0.4)}
+.badge-salon{background:rgba(0,212,255,0.15);color:var(--accent-cyan);border:1px solid rgba(0,212,255,0.3)}
+.card-fav{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.5);border:none;color:var(--text-secondary);cursor:pointer;font-size:14px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color 0.2s,background 0.2s;z-index:2}
+.card-fav:hover{color:#e63946;background:rgba(0,0,0,0.7)}
+.card-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);opacity:0;transition:opacity 0.2s}
+.card-play-btn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 20px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:3}
+.bead-road{display:flex;gap:2px;flex-wrap:wrap;padding:6px 10px;background:rgba(0,0,0,0.3);min-height:28px}
+.bead{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.bead-p{background:#e63946}
+.bead-b{background:#4a90e2}
+.bead-t{background:#2ecc71}
+.card-info{padding:10px 12px}
+.card-name{font-size:13px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.card-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text-secondary)}
+.card-bet{color:var(--accent-gold);font-weight:600}
+
+/* SCROLL ROW */
+.scroll-row-wrapper{position:relative;margin-bottom:40px}
+.scroll-row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.scroll-row::-webkit-scrollbar{display:none}
+.scroll-row .game-card{min-width:220px;flex-shrink:0}
+.scroll-arrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:60px;background:rgba(13,15,23,0.9);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;z-index:10}
+.scroll-arrow:hover{background:var(--bg-hover)}
+.scroll-arrow.left{left:-18px}
+.scroll-arrow.right{right:-18px}
+
+/* GAME SHOW GRID */
+.game-show-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:40px;padding:0 40px}
+.game-show-card{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:3/4;background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:flex-end;transition:transform 0.25s,box-shadow 0.25s}
+.game-show-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.5)}
+.game-show-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px}
+.game-show-info{position:relative;width:100%;padding:16px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.9))}
+.game-show-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.game-show-meta{display:flex;gap:10px;font-size:11px;color:var(--text-secondary)}
+
+/* FOOTER */
+footer{background:var(--bg-secondary);border-top:1px solid var(--border);padding:40px;margin-top:40px}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--text-muted);margin-bottom:16px}
+.footer-text{font-size:12px;color:var(--text-muted);line-height:1.8;max-width:600px}
+
+/* ══════════════════════════
+   BACCARAT PAGE STYLES
+══════════════════════════ */
+.bac-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:4px}
+.bac-title-row{display:flex;align-items:center;gap:14px}
+.bac-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.multi-play-btn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;font-family:inherit;transition:all 0.2s}
+.multi-play-btn:hover{background:rgba(255,255,255,0.12);color:var(--text-primary)}
+
+.bac-filters{display:flex;gap:8px;flex-wrap:wrap;padding:16px 40px 0}
+.filter-chip{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-secondary);transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:5px;font-family:inherit}
+.filter-chip:hover{background:rgba(255,255,255,0.08);color:var(--text-primary);border-color:rgba(255,255,255,0.15)}
+.filter-chip.active{background:rgba(0,212,255,0.1);color:var(--accent-cyan);border-color:rgba(0,212,255,0.3)}
+
+/* BAC GRID: 5 columns like original */
+.bac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+/* DEALER CARD */
+.dealer-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.dealer-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.dealer-card:hover .dc-overlay{opacity:1}
+.dealer-card:hover .dc-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.dealer-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* Felt scene */
+.felt-scene{width:100%;height:100%;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.felt-gold2  {background:linear-gradient(165deg,#1e1204 0%,#3a2408 60%,#2a1a06 100%)}
+.felt-red2   {background:linear-gradient(165deg,#200608 0%,#480c14 60%,#320a10 100%)}
+.felt-dark2  {background:linear-gradient(165deg,#0c0e16 0%,#161a26 60%,#111520 100%)}
+.felt-forest2{background:linear-gradient(165deg,#061208 0%,#0e2812 60%,#0a1e0e 100%)}
+.felt-navy2  {background:linear-gradient(165deg,#060820 0%,#0e1040 60%,#0a0c30 100%)}
+.felt-maroon2{background:linear-gradient(165deg,#180408 0%,#2e0810 60%,#22060c 100%)}
+.felt-indigo2{background:linear-gradient(165deg,#0a0820 0%,#1a1440 60%,#120e30 100%)}
+.felt-wine2  {background:linear-gradient(165deg,#1a0412 0%,#360828 60%,#28061e 100%)}
+
+/* table shine strip */
+.felt-scene::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:rgba(255,255,255,0.06);border-radius:50%}
+
+/* dealer figure */
+.dealer-fig{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:22%}
+.dealer-emoji{font-size:50px;line-height:1;filter:drop-shadow(0 6px 14px rgba(0,0,0,0.7));margin-bottom:2px}
+.dealer-emoji.sm{font-size:38px}
+
+/* felt table bottom */
+.felt-table{position:absolute;bottom:0;left:0;right:0;height:30%;display:flex;align-items:center;justify-content:center;gap:20px;opacity:0.35}
+.felt-table-label{font-size:7px;font-weight:700;letter-spacing:2px;color:#fff;text-transform:uppercase}
+
+/* WHITE watermark */
+.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;color:rgba(255,255,255,0.1);pointer-events:none;white-space:nowrap}
+
+/* bead road in bac card */
+.dc-bead-road{display:flex;gap:2px;flex-wrap:wrap;padding:5px 8px;background:rgba(0,0,0,0.4);min-height:26px}
+.dc-bead{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+.dc-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.dc-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:3}
+
+.dc-info{padding:9px 11px}
+.dc-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.dc-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.dc-bet{color:var(--accent-gold);font-weight:700}
+
+/* CASINO CHOICE PAGE */
+.choice-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.choice-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.choice-filters{display:flex;gap:8px;padding:16px 40px 0}
+.choice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+.show-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.show-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.show-card:hover .sc-overlay{opacity:1}
+.show-card:hover .sc-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.show-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+.scene-bac   {background:linear-gradient(165deg,#1e1204,#3a2408)}
+.scene-red   {background:linear-gradient(165deg,#200608,#480c14)}
+.scene-dark  {background:linear-gradient(165deg,#0c0e16,#161a26)}
+.scene-forest{background:linear-gradient(165deg,#061208,#0e2812)}
+.scene-slate {background:linear-gradient(165deg,#0c1018,#1a2030)}
+.scene-wine  {background:linear-gradient(165deg,#1a0412,#360828)}
+.scene-indigo{background:linear-gradient(165deg,#0a0820,#1a1440)}
+.scene-teal  {background:linear-gradient(165deg,#061414,#0e2828)}
+.scene-navy  {background:linear-gradient(165deg,#060820,#0e1040)}
+.scene-amber {background:linear-gradient(165deg,#1a1004,#3a2808)}
+.scene-purple{background:linear-gradient(165deg,#120824,#281050)}
+.scene-green {background:linear-gradient(165deg,#061208,#143020)}
+.show-scene{width:100%;height:100%;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.show-scene .wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;color:rgba(255,255,255,0.09);pointer-events:none;white-space:nowrap}
+.show-dealer{font-size:52px;line-height:1;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.8));margin-bottom:18%}
+.show-dealer.sm{font-size:40px}
+.show-table-bar{position:absolute;bottom:0;left:0;right:0;height:28%;display:flex;align-items:center;justify-content:center;gap:18px;opacity:0.3}
+.show-table-label{font-size:7px;font-weight:700;letter-spacing:2px;color:#fff;text-transform:uppercase}
+.sc-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.sc-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:3}
+.sc-bead-road{display:flex;gap:2px;flex-wrap:wrap;padding:5px 8px;background:rgba(0,0,0,0.4);min-height:26px}
+.sc-bead{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sc-info{padding:9px 11px}
+.sc-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.sc-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.sc-bet{color:var(--accent-gold);font-weight:700}
+.show-game-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:54px}
+.show-game-info{padding:9px 11px}
+.show-game-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.show-game-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.show-game-bet{color:var(--accent-gold);font-weight:700}
+.result-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);padding:3px 6px;display:flex;gap:3px;overflow:hidden}
+.rtick{font-size:10px;font-weight:700;padding:1px 4px;border-radius:3px;min-width:16px;text-align:center}
+
+/* BEST GAMES PAGE */
+.best-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.best-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.best-filter-right{display:flex;gap:8px}
+.best-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+/* universal game card for best page */
+.bg-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.bg-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.bg-card:hover .bg-overlay{opacity:1}
+.bg-card:hover .bg-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.bg-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bg-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.bg-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:3}
+.bg-info{padding:9px 11px}
+.bg-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.bg-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.bg-bet{color:var(--accent-gold);font-weight:700}
+
+/* dealer scene for best page */
+.bgs-scene{width:100%;height:100%;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.bgs-scene .wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;color:rgba(255,255,255,0.09);pointer-events:none;white-space:nowrap}
+.bgs-dealer{font-size:52px;line-height:1;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.8));margin-bottom:18%}
+.bgs-table-bar{position:absolute;bottom:0;left:0;right:0;height:28%;display:flex;align-items:center;justify-content:center;gap:18px;opacity:0.3}
+.bgs-table-label{font-size:7px;font-weight:700;letter-spacing:2px;color:#fff;text-transform:uppercase}
+
+/* bead road */
+.bg-bead-road{display:flex;gap:2px;flex-wrap:wrap;padding:5px 8px;background:rgba(0,0,0,0.4);min-height:26px}
+.bg-bead{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+/* ticker row */
+.bg-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);padding:3px 6px;display:flex;gap:3px;overflow:hidden;flex-wrap:nowrap}
+.bg-tick{font-size:10px;font-weight:700;padding:2px 4px;border-radius:3px;min-width:16px;text-align:center;flex-shrink:0}
+
+/* multiplier ticker (Red Baron style) */
+.multi-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.7);padding:4px 8px;display:flex;align-items:center;gap:6px}
+.multi-cur{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px}
+.multi-rest{display:flex;gap:4px}
+.multi-num{font-size:10px;color:var(--text-secondary)}
+
+/* BLACKJACK PAGE */
+.bj-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:0}
+.bj-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.bj-filters{display:flex;gap:8px;flex-wrap:wrap;padding:16px 40px 0}
+.bj-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+.bj-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.bj-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.bj-card:hover .bj-ov{opacity:1}
+.bj-card:hover .bj-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.bj-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* ── 블랙잭 테이블 씬 ── */
+.bj-scene{width:100%;height:100%;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+
+/* 방 배경 */
+.bjs-pink   {background:radial-gradient(ellipse at 50% 0%,#3a0830 0%,#1a0418 60%,#0e0210 100%)}
+.bjs-green  {background:radial-gradient(ellipse at 50% 0%,#0e2814 0%,#061008 60%,#040c06 100%)}
+.bjs-navy   {background:radial-gradient(ellipse at 50% 0%,#0c1e3a 0%,#060e1e 60%,#040810 100%)}
+.bjs-purple {background:radial-gradient(ellipse at 50% 0%,#1e0a3e 0%,#0e0420 60%,#080212 100%)}
+.bjs-red    {background:radial-gradient(ellipse at 50% 0%,#3a0e0e 0%,#1e0606 60%,#120404 100%)}
+.bjs-gold   {background:radial-gradient(ellipse at 50% 0%,#2e1e06 0%,#1a1004 60%,#100c02 100%)}
+.bjs-dark   {background:radial-gradient(ellipse at 50% 0%,#1a1a26 0%,#0e0e18 60%,#080810 100%)}
+.bjs-teal   {background:radial-gradient(ellipse at 50% 0%,#0a2230 0%,#041018 60%,#020c12 100%)}
+.bjs-maroon {background:radial-gradient(ellipse at 50% 0%,#2a0a14 0%,#14040a 60%,#0e0206 100%)}
+.bjs-slate  {background:radial-gradient(ellipse at 50% 0%,#18202e 0%,#0e1018 60%,#080c12 100%)}
+.bjs-indigo {background:radial-gradient(ellipse at 50% 0%,#140c3a 0%,#080620 60%,#060412 100%)}
+.bjs-amber  {background:radial-gradient(ellipse at 50% 0%,#2e1a06 0%,#1a1004 60%,#120c02 100%)}
+
+/* 천장 조명 */
+.bj-scene::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:60%;height:40%;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,220,140,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* 타원형 테이블 */
+.bj-table{
+  position:absolute;bottom:-18%;left:50%;transform:translateX(-50%);
+  width:130%;height:62%;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.12);
+  box-shadow:0 -8px 40px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.07);
+}
+.bj-table.pink-t   {background:radial-gradient(ellipse,#c0206a 0%,#8a1050 40%,#5a0830 100%)}
+.bj-table.green-t  {background:radial-gradient(ellipse,#1a6b2e 0%,#0e4020 40%,#082814 100%)}
+.bj-table.navy-t   {background:radial-gradient(ellipse,#1a2e6b 0%,#0e1e48 40%,#081430 100%)}
+.bj-table.purple-t {background:radial-gradient(ellipse,#4a1870 0%,#2e0e48 40%,#1e082e 100%)}
+.bj-table.red-t    {background:radial-gradient(ellipse,#7a1a1a 0%,#4e0e0e 40%,#300808 100%)}
+.bj-table.gold-t   {background:radial-gradient(ellipse,#7a5c18 0%,#503c0e 40%,#302408 100%)}
+.bj-table.dark-t   {background:radial-gradient(ellipse,#2e2e42 0%,#1e1e2e 40%,#10101e 100%)}
+.bj-table.maroon-t {background:radial-gradient(ellipse,#6e1828 0%,#420e18 40%,#280810 100%)}
+.bj-table.slate-t  {background:radial-gradient(ellipse,#283040 0%,#18202e 40%,#101820 100%)}
+.bj-table.amber-t  {background:radial-gradient(ellipse,#7a5c18 0%,#503c0e 40%,#302408 100%)}
+
+/* 테이블 텍스트 */
+.bj-table-text{
+  position:absolute;bottom:22%;left:50%;transform:translateX(-50%);
+  font-size:7px;font-weight:700;letter-spacing:1.5px;
+  color:rgba(255,255,255,0.25);text-transform:uppercase;white-space:nowrap;
+  z-index:2;
+}
+
+/* 딜러 */
+.bj-dealer-wrap{
+  position:absolute;bottom:30%;left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;flex-direction:column;align-items:center;
+}
+.bj-dealer-em{
+  font-size:46px;line-height:1;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,0.95)) brightness(0.95);
+}
+.bj-dealer-em.sm{font-size:36px}
+
+/* 자리 표시기 */
+.bj-seats{
+  position:absolute;bottom:4px;left:0;right:0;
+  display:flex;justify-content:center;gap:10px;z-index:4;
+}
+.bj-seat{
+  width:16px;height:16px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:rgba(255,255,255,0.3);
+}
+.bj-seat.taken{
+  background:rgba(0,212,255,0.15);
+  border-color:rgba(0,212,255,0.4);
+  color:rgba(0,212,255,0.8);
+}
+
+/* 크랩스 숫자 */
+.craps-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);padding:3px 8px;display:flex;gap:4px;align-items:center}
+.craps-on{background:rgba(34,212,122,0.3);border:1px solid #22d47a;color:#22d47a;font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+.craps-num{font-size:10px;font-weight:700;color:#fff;padding:1px 3px}
+
+/* BLACKJACK 로고 오버레이 (Easy/Infinite/VIP 스타일) */
+.bj-logo-overlay{
+  position:absolute;top:18%;left:50%;transform:translateX(-50%);
+  z-index:3;text-align:center;white-space:nowrap;
+}
+.bj-logo-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:15px;letter-spacing:2px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.8);
+}
+.bj-logo-sub{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:10px;letter-spacing:3px;opacity:0.7;
+}
+
+/* overlay / play */
+.bj-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.bj-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.bj-info{padding:9px 11px}
+.bj-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.bj-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.bj-bet{color:var(--accent-gold);font-weight:700}
+
+/* BOARD GAME PAGE */
+.board-header{padding:28px 40px 0;display:flex;align-items:center;margin-bottom:0}
+.board-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.board-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+.board-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.board-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.board-card:hover .board-ov{opacity:1}
+.board-card:hover .board-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.board-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* 보드게임 씬 배경 */
+.brd-red    {background:radial-gradient(ellipse at 50% 0%,#3a0a12 0%,#1a0408 60%,#0e0204 100%)}
+.brd-green  {background:radial-gradient(ellipse at 50% 0%,#0a2e14 0%,#061408 60%,#030c04 100%)}
+.brd-navy   {background:radial-gradient(ellipse at 50% 0%,#0a1e3a 0%,#060e1c 60%,#030810 100%)}
+.brd-purple {background:radial-gradient(ellipse at 50% 0%,#1a0a3a 0%,#0c0420 60%,#080212 100%)}
+.brd-gold   {background:radial-gradient(ellipse at 50% 0%,#2e1c06 0%,#180e04 60%,#100802 100%)}
+.brd-dark   {background:radial-gradient(ellipse at 50% 0%,#161620 0%,#0c0c14 60%,#080810 100%)}
+.brd-teal   {background:radial-gradient(ellipse at 50% 0%,#062030 0%,#030e18 60%,#020c12 100%)}
+.brd-slate  {background:radial-gradient(ellipse at 50% 0%,#141e2c 0%,#0c1018 60%,#080c12 100%)}
+.brd-forest {background:radial-gradient(ellipse at 50% 0%,#081a0c 0%,#040e06 60%,#030804 100%)}
+.brd-maroon {background:radial-gradient(ellipse at 50% 0%,#2a0810 0%,#140408 60%,#0e0204 100%)}
+.brd-wine   {background:radial-gradient(ellipse at 50% 0%,#2a0618 0%,#14030c 60%,#0e0208 100%)}
+.brd-indigo {background:radial-gradient(ellipse at 50% 0%,#0e0a30 0%,#080618 60%,#060410 100%)}
+
+/* 조명 */
+.board-scene{width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.board-scene::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:55%;height:35%;background:radial-gradient(ellipse at 50% 0%,rgba(255,210,120,0.15) 0%,transparent 70%);pointer-events:none}
+
+/* 타원 테이블 */
+.board-table{position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:120%;height:58%;border-radius:50%;border:2px solid rgba(255,255,255,0.1);box-shadow:0 -6px 30px rgba(0,0,0,0.7),inset 0 2px 0 rgba(255,255,255,0.06)}
+.brd-t-red    {background:radial-gradient(ellipse,#7a1420 0%,#4e0a14 40%,#300608 100%)}
+.brd-t-green  {background:radial-gradient(ellipse,#1a6b2e 0%,#0e4020 40%,#082814 100%)}
+.brd-t-navy   {background:radial-gradient(ellipse,#1a2e6b 0%,#0e1e48 40%,#081430 100%)}
+.brd-t-purple {background:radial-gradient(ellipse,#4a1870 0%,#2e0e48 40%,#1e082e 100%)}
+.brd-t-gold   {background:radial-gradient(ellipse,#7a5c18 0%,#503c0e 40%,#302408 100%)}
+.brd-t-dark   {background:radial-gradient(ellipse,#2a2a3e 0%,#1a1a2a 40%,#10101e 100%)}
+.brd-t-teal   {background:radial-gradient(ellipse,#1a4a5e 0%,#0d2838 40%,#082030 100%)}
+.brd-t-maroon {background:radial-gradient(ellipse,#6e1828 0%,#420e18 40%,#280810 100%)}
+.brd-t-forest {background:radial-gradient(ellipse,#184e28 0%,#0e2e18 40%,#081e10 100%)}
+
+/* 딜러 */
+.board-dealer-wrap{position:absolute;bottom:32%;left:50%;transform:translateX(-50%);z-index:3}
+.board-dealer-em{font-size:44px;line-height:1;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.95))}
+.board-dealer-em.sm{font-size:34px}
+
+/* 게임 로고 */
+.board-logo{position:absolute;top:14%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;white-space:nowrap}
+.board-logo-text{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,0.9)}
+.board-logo-sub{font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:3px;opacity:0.65}
+
+/* 결과 티커 (판탄, 식보 등) */
+.board-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.78);padding:3px 6px;display:flex;gap:3px;overflow:hidden}
+.board-tick{font-size:10px;font-weight:700;padding:2px 5px;border-radius:3px;min-width:17px;text-align:center;flex-shrink:0}
+
+/* 오버레이 */
+.board-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.board-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.board-bead-road{display:flex;gap:2px;flex-wrap:wrap;padding:5px 8px;background:rgba(0,0,0,0.4);min-height:26px}
+.board-bead{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+.board-info{padding:9px 11px}
+.board-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.board-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.board-bet{color:var(--accent-gold);font-weight:700}
+
+/* ══════════════════════════════
+   HILO & DRAGON TIGER PAGE
+══════════════════════════════ */
+.hilo-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.hilo-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.hilo-filter-right{display:flex;gap:8px}
+.hilo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+/* 하이로 딜러 카드 */
+.hilo-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.hilo-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.hilo-card:hover .hilo-ov{opacity:1}
+.hilo-card:hover .hilo-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.hilo-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* 방 배경 */
+.hls-red    {background:radial-gradient(ellipse at 50% 0%,#3a0a10 0%,#1a0408 60%,#0e0204 100%)}
+.hls-dark   {background:radial-gradient(ellipse at 50% 0%,#1a1410 0%,#0e0c08 60%,#080804 100%)}
+.hls-navy   {background:radial-gradient(ellipse at 50% 0%,#0a1030 0%,#060820 60%,#040610 100%)}
+.hls-gold   {background:radial-gradient(ellipse at 50% 0%,#2e1e08 0%,#1a1004 60%,#100c02 100%)}
+.hls-maroon {background:radial-gradient(ellipse at 50% 0%,#2a0810 0%,#14040a 60%,#0e0206 100%)}
+.hls-slate  {background:radial-gradient(ellipse at 50% 0%,#14182a 0%,#0c1018 60%,#080c12 100%)}
+.hls-green  {background:radial-gradient(ellipse at 50% 0%,#08200e 0%,#040e06 60%,#030804 100%)}
+.hls-indigo {background:radial-gradient(ellipse at 50% 0%,#0e0a2a 0%,#080618 60%,#060410 100%)}
+
+/* 조명 */
+.hilo-scene{width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.hilo-scene::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:38%;background:radial-gradient(ellipse at 50% 0%,rgba(255,180,80,0.14) 0%,transparent 70%);pointer-events:none}
+
+/* 타원형 테이블 */
+.hilo-table{position:absolute;bottom:-20%;left:50%;transform:translateX(-50%);width:130%;height:60%;border-radius:50%;border:2px solid rgba(255,255,255,0.1);box-shadow:0 -6px 30px rgba(0,0,0,0.7),inset 0 2px 0 rgba(255,255,255,0.06)}
+.hlt-red    {background:radial-gradient(ellipse,#7a1020 0%,#4e0814 40%,#300608 100%)}
+.hlt-dark   {background:radial-gradient(ellipse,#3a2810 0%,#241808 40%,#180e04 100%)}
+.hlt-navy   {background:radial-gradient(ellipse,#1a2060 0%,#0e1440 40%,#080e28 100%)}
+.hlt-gold   {background:radial-gradient(ellipse,#7a5c18 0%,#503c0e 40%,#302408 100%)}
+.hlt-maroon {background:radial-gradient(ellipse,#6e1828 0%,#420e18 40%,#280810 100%)}
+.hlt-green  {background:radial-gradient(ellipse,#1a5a28 0%,#0e3818 40%,#082410 100%)}
+
+/* 딜러 */
+.hilo-dealer-wrap{position:absolute;bottom:28%;left:50%;transform:translateX(-50%);z-index:3}
+.hilo-dealer-em{font-size:48px;line-height:1;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.95))}
+.hilo-dealer-em.sm{font-size:36px}
+
+/* 게임 로고 오버레이 */
+.hilo-logo{position:absolute;top:12%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;white-space:nowrap}
+.hilo-logo-text{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,0.9)}
+.hilo-logo-sub{font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:3px;opacity:0.7}
+
+/* 비드로드 */
+.hilo-bead-road{display:flex;gap:2px;flex-wrap:wrap;padding:5px 8px;background:rgba(0,0,0,0.4);min-height:26px}
+.hilo-bead{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+/* 결과 티커 (안다르 바하르, 야구 등) */
+.hilo-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.78);padding:3px 6px;display:flex;gap:3px;overflow:hidden;flex-wrap:nowrap}
+.hilo-tick{font-size:10px;font-weight:700;padding:2px 5px;border-radius:3px;min-width:17px;text-align:center;flex-shrink:0}
+
+/* 오버레이 */
+.hilo-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.hilo-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.hilo-info{padding:9px 11px}
+.hilo-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.hilo-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.hilo-bet{color:var(--accent-gold);font-weight:700}
+
+/* ══════════════════════════
+   GAME SHOW PAGE
+══════════════════════════ */
+.gs-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.gs-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.gs-filter-right{display:flex;gap:8px}
+.gs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+.gs-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.gs-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.gs-card:hover .gs-ov{opacity:1}
+.gs-card:hover .gs-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.gs-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+/* 씬 배경 */
+.gss-red    {background:radial-gradient(ellipse at 50% 0%,#3a0a10 0%,#1c0408 70%,#0e0204 100%)}
+.gss-navy   {background:radial-gradient(ellipse at 50% 0%,#0a1230 0%,#060820 70%,#040614 100%)}
+.gss-purple {background:radial-gradient(ellipse at 50% 0%,#1a0a3a 0%,#0c0422 70%,#080214 100%)}
+.gss-green  {background:radial-gradient(ellipse at 50% 0%,#08200e 0%,#041008 70%,#030804 100%)}
+.gss-gold   {background:radial-gradient(ellipse at 50% 0%,#2e1c06 0%,#1a1004 70%,#0e0c02 100%)}
+.gss-dark   {background:radial-gradient(ellipse at 50% 0%,#1a1820 0%,#0e0c14 70%,#080810 100%)}
+.gss-teal   {background:radial-gradient(ellipse at 50% 0%,#08202a 0%,#041018 70%,#030c12 100%)}
+.gss-orange {background:radial-gradient(ellipse at 50% 0%,#2a1206 0%,#160804 70%,#0e0602 100%)}
+.gss-slate  {background:radial-gradient(ellipse at 50% 0%,#14182a 0%,#0c1018 70%,#080c12 100%)}
+.gss-maroon {background:radial-gradient(ellipse at 50% 0%,#2a0810 0%,#14040a 70%,#0e0206 100%)}
+.gss-cyan   {background:radial-gradient(ellipse at 50% 0%,#062028 0%,#030e16 70%,#020c10 100%)}
+.gss-indigo {background:radial-gradient(ellipse at 50% 0%,#0e0a2a 0%,#080618 70%,#060410 100%)}
+
+/* 게임 메인 아이콘/이모지 */
+.gs-main-icon{font-size:60px;filter:drop-shadow(0 0 20px rgba(255,255,255,0.15));position:relative;z-index:2}
+.gs-main-icon.sm{font-size:44px}
+
+/* 결과 티커 */
+.gs-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.78);padding:3px 6px;display:flex;gap:3px;overflow:hidden;flex-wrap:nowrap;z-index:3}
+.gs-tick{font-size:10px;font-weight:700;padding:2px 5px;border-radius:3px;min-width:17px;text-align:center;flex-shrink:0;color:#fff}
+
+/* 오버레이 */
+.gs-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.gs-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.gs-info{padding:9px 11px}
+.gs-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.gs-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.gs-bet{color:var(--accent-gold);font-weight:700}
+
+/* ══════════════════════════
+   ROULETTE PAGE
+══════════════════════════ */
+.rl-header{padding:28px 40px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.rl-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.rl-filter-right{display:flex;gap:8px}
+.rl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+.rl-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.rl-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.rl-card:hover .rl-ov{opacity:1}
+.rl-card:hover .rl-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.rl-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* 방 배경 */
+.rls-green  {background:radial-gradient(ellipse at 50% 30%,#0e2e14 0%,#061008 60%,#030804 100%)}
+.rls-dark   {background:radial-gradient(ellipse at 50% 30%,#1a1820 0%,#0e0c14 60%,#080810 100%)}
+.rls-gold   {background:radial-gradient(ellipse at 50% 30%,#2e1c06 0%,#1a1004 60%,#0e0c02 100%)}
+.rls-slate  {background:radial-gradient(ellipse at 50% 30%,#141828 0%,#0c1018 60%,#080c12 100%)}
+.rls-navy   {background:radial-gradient(ellipse at 50% 30%,#0a1030 0%,#060820 60%,#040614 100%)}
+.rls-maroon {background:radial-gradient(ellipse at 50% 30%,#2a0810 0%,#14040a 60%,#0e0206 100%)}
+.rls-red    {background:radial-gradient(ellipse at 50% 30%,#3a0a10 0%,#1c0408 60%,#0e0204 100%)}
+.rls-teal   {background:radial-gradient(ellipse at 50% 30%,#082028 0%,#041016 60%,#030c12 100%)}
+
+/* 조명 */
+.rl-scene{width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center}
+.rl-scene::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;height:50%;background:radial-gradient(ellipse at 50% 0%,rgba(255,200,100,0.12) 0%,transparent 70%);pointer-events:none}
+
+/* 룰렛 휠 SVG 시뮬레이션 */
+.rl-wheel-wrap{position:relative;width:72%;padding-bottom:72%;flex-shrink:0}
+.rl-wheel{position:absolute;inset:0;border-radius:50%;border:4px solid rgba(255,255,255,0.15);box-shadow:0 0 24px rgba(0,0,0,0.8),inset 0 0 16px rgba(0,0,0,0.6);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.rl-wheel-inner{width:88%;height:88%;border-radius:50%;border:3px solid rgba(255,255,255,0.1);box-shadow:inset 0 0 12px rgba(0,0,0,0.7);position:relative;overflow:hidden}
+.rl-wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22%;height:22%;border-radius:50%;background:radial-gradient(circle,#c8a96e,#8b6914);border:2px solid rgba(255,255,255,0.3);box-shadow:0 0 8px rgba(200,169,110,0.5);z-index:3}
+
+/* 휠 세그먼트 그라디언트 */
+.rl-wheel-segs{position:absolute;inset:0;border-radius:50%;background:conic-gradient(
+  #e74c3c 0deg 10deg, #2c3e50 10deg 20deg, #e74c3c 20deg 30deg, #2c3e50 30deg 40deg,
+  #e74c3c 40deg 50deg, #2c3e50 50deg 60deg, #e74c3c 60deg 70deg, #2c3e50 70deg 80deg,
+  #e74c3c 80deg 90deg, #2c3e50 90deg 100deg, #e74c3c 100deg 110deg, #2c3e50 110deg 120deg,
+  #e74c3c 120deg 130deg, #2c3e50 130deg 140deg, #e74c3c 140deg 150deg, #2c3e50 150deg 160deg,
+  #e74c3c 160deg 170deg, #2c3e50 170deg 180deg, #2ecc71 180deg 190deg, #2c3e50 190deg 200deg,
+  #e74c3c 200deg 210deg, #2c3e50 210deg 220deg, #e74c3c 220deg 230deg, #2c3e50 230deg 240deg,
+  #e74c3c 240deg 250deg, #2c3e50 250deg 260deg, #e74c3c 260deg 270deg, #2c3e50 270deg 280deg,
+  #e74c3c 280deg 290deg, #2c3e50 290deg 300deg, #e74c3c 300deg 310deg, #2c3e50 310deg 320deg,
+  #e74c3c 320deg 330deg, #2c3e50 330deg 340deg, #e74c3c 340deg 350deg, #2c3e50 350deg 360deg
+)}
+
+/* 딜러 (룰렛엔 없는 경우도 있음) */
+.rl-dealer{position:absolute;bottom:4%;right:8%;font-size:32px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.9));z-index:3}
+
+/* 결과 티커 */
+.rl-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.82);padding:3px 6px;display:flex;gap:3px;overflow:hidden;flex-wrap:nowrap;z-index:4}
+.rl-tick{font-size:10px;font-weight:700;padding:2px 5px;border-radius:3px;min-width:17px;text-align:center;flex-shrink:0;color:#fff}
+.rl-tick.hl{outline:2px solid #fff;outline-offset:0px}
+
+/* 오버레이 */
+.rl-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.rl-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.rl-info{padding:9px 11px}
+.rl-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.rl-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.rl-bet{color:var(--accent-gold);font-weight:700}
+
+/* ══════════════════════════
+   POKER PAGE
+══════════════════════════ */
+.pk-header{padding:28px 40px 0;display:flex;align-items:center;margin-bottom:0}
+.pk-page-title{font-size:22px;font-weight:900;color:var(--text-primary)}
+.pk-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px 40px 40px}
+
+.pk-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.pk-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.pk-card:hover .pk-ov{opacity:1}
+.pk-card:hover .pk-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.pk-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* 포커 테이블 씬 배경 */
+.pks-gold   {background:radial-gradient(ellipse at 50% 0%,#2a1c06 0%,#160e04 60%,#0e0a02 100%)}
+.pks-green  {background:radial-gradient(ellipse at 50% 0%,#061a0c 0%,#030e06 60%,#020804 100%)}
+.pks-maroon {background:radial-gradient(ellipse at 50% 0%,#22060e 0%,#10040a 60%,#0e0206 100%)}
+.pks-teal   {background:radial-gradient(ellipse at 50% 0%,#061820 0%,#030e14 60%,#020c10 100%)}
+.pks-purple {background:radial-gradient(ellipse at 50% 0%,#100828 0%,#080416 60%,#060210 100%)}
+.pks-dark   {background:radial-gradient(ellipse at 50% 0%,#141420 0%,#0a0a14 60%,#08080e 100%)}
+
+/* 천장 조명 */
+.pk-scene{width:100%;height:100%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.pk-scene::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:65%;height:45%;background:radial-gradient(ellipse at 50% 0%,rgba(255,200,100,0.15) 0%,transparent 70%);pointer-events:none}
+
+/* 황금 기둥 장식 (포커 특유 인테리어) */
+.pk-pillars{position:absolute;top:0;left:0;right:0;bottom:10%;display:flex;justify-content:space-between;padding:0 8%;pointer-events:none}
+.pk-pillar{width:5px;height:100%;background:linear-gradient(180deg,rgba(240,180,41,0.6),rgba(180,130,20,0.2),rgba(240,180,41,0.4));border-radius:2px;opacity:0.5}
+
+/* 타원형 포커 테이블 */
+.pk-table{position:absolute;bottom:-22%;left:50%;transform:translateX(-50%);width:130%;height:60%;border-radius:50%;border:2px solid rgba(255,255,255,0.1);box-shadow:0 -6px 30px rgba(0,0,0,0.8),inset 0 2px 0 rgba(255,255,255,0.06)}
+.pkt-green  {background:radial-gradient(ellipse,#1a6b30 0%,#0e4020 40%,#062814 100%)}
+.pkt-teal   {background:radial-gradient(ellipse,#1a4a50 0%,#0e2830 40%,#062028 100%)}
+.pkt-maroon {background:radial-gradient(ellipse,#6e1828 0%,#420e18 40%,#280810 100%)}
+.pkt-purple {background:radial-gradient(ellipse,#3a1a5e 0%,#220e38 40%,#140820 100%)}
+.pkt-dark   {background:radial-gradient(ellipse,#2a2a3e 0%,#1a1a2a 40%,#10101e 100%)}
+
+/* 테이블 텍스트 */
+.pk-table-text{position:absolute;bottom:25%;left:50%;transform:translateX(-50%);font-size:7px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.22);text-transform:uppercase;white-space:nowrap;z-index:2}
+
+/* 게임 로고 */
+.pk-logo{position:absolute;top:12%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;white-space:nowrap}
+.pk-logo-text{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,0.9)}
+.pk-logo-sub{font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:3px;opacity:0.7}
+
+/* 딜러 */
+.pk-dealer-wrap{position:absolute;bottom:30%;left:50%;transform:translateX(-50%);z-index:3}
+.pk-dealer-em{font-size:46px;line-height:1;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.95))}
+.pk-dealer-em.sm{font-size:34px}
+
+/* 안다르 바하르 티커 */
+.pk-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.78);padding:3px 7px;display:flex;gap:4px;overflow:hidden;flex-wrap:nowrap;z-index:4;align-items:center}
+.pk-tick{font-size:11px;font-weight:700;padding:2px 6px;border-radius:50%;min-width:18px;height:18px;text-align:center;flex-shrink:0;color:#fff;display:inline-flex;align-items:center;justify-content:center}
+
+/* 오버레이 */
+.pk-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.pk-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.pk-info{padding:9px 11px}
+.pk-name{font-size:12px;font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.pk-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.pk-bet{color:var(--accent-gold);font-weight:700}
+
+/* ══════════════════════════════
+   INSTANT & FIRSTPERSON PAGES
+══════════════════════════════ */
+.sm-header{padding:28px 40px 0;margin-bottom:0}
+.sm-page-title{font-size:22px;font-weight:900;color:var(--text-primary);margin-bottom:20px}
+.sm-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:0 40px 40px}
+
+/* 인스턴트/1인칭 카드 */
+.sm-card{background:var(--bg-card);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;position:relative}
+.sm-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,212,255,0.25)}
+.sm-card:hover .sm-ov{opacity:1}
+.sm-card:hover .sm-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.sm-thumb{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden}
+
+/* 레드 배론 씬 배경 */
+.sm-redbaron{background:linear-gradient(160deg,#0a0c18 0%,#0e1028 40%,#080c1e 100%)}
+
+/* 배율 티커 */
+.sm-ticker{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);padding:4px 8px;display:flex;gap:5px;overflow:hidden;flex-wrap:nowrap;z-index:4;align-items:center}
+.sm-tick{font-size:11px;font-weight:700;padding:3px 7px;border-radius:4px;min-width:30px;text-align:center;flex-shrink:0}
+.sm-tick.hi{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.4);color:#fff}
+.sm-tick.dim{background:none;border:none;color:var(--text-secondary)}
+
+/* 오버레이 */
+.sm-ov{position:absolute;inset:0;background:rgba(0,0,0,0.45);opacity:0;transition:opacity 0.2s}
+.sm-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(0.8);background:var(--accent-cyan);color:#0d0f17;font-family:inherit;font-size:12px;font-weight:700;padding:8px 18px;border-radius:50px;border:none;cursor:pointer;opacity:0;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;z-index:5}
+
+.sm-info{padding:9px 11px}
+.sm-name{font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:4px}
+.sm-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary)}
+.sm-bet{color:var(--accent-gold);font-weight:700}
+
+/* ══════════════════════════
+   DROPDOWN MENU
+══════════════════════════ */
+.menu-btn{position:relative}
+.dropdown-menu{
+  position:fixed;
+  top:52px;
+  right:16px;
+  width:220px;
+  background:#1a1e2e;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  box-shadow:0 16px 48px rgba(0,0,0,0.7),0 4px 16px rgba(0,0,0,0.4);
+  z-index:2000;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(-8px) scale(0.97);
+  pointer-events:none;
+  transition:opacity 0.18s ease,transform 0.18s ease;
+}
+.dropdown-menu.open{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:all;
+}
+.dropdown-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:15px 20px;
+  cursor:pointer;
+  color:#c8d0e0;
+  font-size:14px;
+  font-weight:500;
+  transition:background 0.15s;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  user-select:none;
+}
+.dropdown-item:last-child{border-bottom:none}
+.dropdown-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+.dropdown-item:active{background:rgba(255,255,255,0.1)}
+.dropdown-icon{
+  font-size:17px;
+  width:22px;
+  text-align:center;
+  flex-shrink:0;
+  opacity:0.85;
+}
+.dropdown-label{flex:1}
+.dropdown-right{
+  font-size:12px;
+  color:var(--text-secondary);
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.dropdown-chevron{font-size:11px;opacity:0.6}
+
+/* 메뉴 열렸을 때 배경 클릭 닫기용 오버레이 */
+.menu-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:1999;
+  display:none;
+}
+.menu-backdrop.open{display:block}
+
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE  (max-width: 768px)
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── TOPBAR ── */
+  .topbar {
+    padding: 0 14px;
+    gap: 10px;
+    height: 52px;
+  }
+  :root { --nav-height: 52px; }
+
+  .logo { font-size: 17px; }
+  .logo-icon { font-size: 16px; }
+
+  /* 검색창: 모바일에서 숨김 (공간 절약) */
+  .search-box { display: none; }
+
+  .user-count { font-size: 11px; gap: 4px; }
+  .balance { font-size: 11px; padding: 5px 9px; gap: 4px; }
+  .menu-btn { font-size: 17px; }
+
+  /* ── CAT NAV: 슬라이드 스크롤 ── */
+  .cat-nav {
+    height: 60px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .cat-nav::-webkit-scrollbar { display: none; }
+
+  .cat-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;   /* 모바일: 왼쪽부터, 슬라이드 */
+    height: 100%;
+    padding: 0 10px;
+    gap: 2px;
+    min-width: max-content;        /* 슬라이드를 위해 max-content */
+    width: auto;
+  }
+
+  .cat-item {
+    flex: none;                    /* 모바일: 고정 크기 */
+    min-width: 58px;
+    max-width: 72px;
+    padding: 6px 8px;
+    gap: 3px;
+    border-radius: 8px;
+  }
+  .cat-icon { font-size: 18px; }
+  .cat-label { font-size: 9px; }
+
+  /* ── MAIN 패딩 ── */
+  .main { padding-top: calc(52px + 60px); }
+
+  /* ── HERO ── */
+  .hero { height: 220px; }
+  .hero-game-emoji {
+    font-size: 70px;
+    right: 4%;
+  }
+  .hero-content { left: 18px; bottom: 44px; max-width: 220px; }
+  .hero-game-title { font-size: 32px; }
+  .hero-game-subtitle { font-size: 10px; margin-bottom: 12px; }
+  .hero-meta { margin-bottom: 12px; gap: 10px; }
+  .hero-min-bet { font-size: 12px; }
+  .hero-players { font-size: 12px; }
+  .hero-btn { font-size: 12px; padding: 9px 20px; }
+  .hero-nav-dots { left: 18px; bottom: 12px; }
+
+  /* ── SECTION ── */
+  .section { padding: 20px 14px 0; }
+  .section-title { font-size: 15px; }
+  .section-more { font-size: 11px; }
+
+  /* ── GAME CARD (스크롤 행) ── */
+  .scroll-row-wrapper { margin-bottom: 24px; }
+  .scroll-row .game-card { min-width: 150px; }
+  .scroll-arrow { display: none; } /* 모바일: 화살표 숨김, 터치 스크롤 */
+
+  .card-thumb { aspect-ratio: 16/10; }
+  .card-name { font-size: 11px; }
+  .card-meta { font-size: 10px; }
+  .card-info { padding: 7px 9px; }
+  .bead-road { min-height: 22px; padding: 4px 7px; }
+  .bead { width: 8px; height: 8px; }
+
+  /* ── GAME SHOW GRID ── */
+  .game-show-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 14px;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  /* ── FOOTER ── */
+  footer { padding: 24px 14px; }
+  .footer-logo { font-size: 20px; }
+  .footer-text { font-size: 11px; }
+
+  /* ── BACCARAT / CHOICE / BEST / HILO / GAMESHOW 그리드 ── */
+  .bac-grid,
+  .choice-grid,
+  .best-grid,
+  .hilo-grid,
+  .gs-grid,
+  .rl-grid,
+  .pk-grid,
+  .board-grid,
+  .sm-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 14px 14px 28px;
+    gap: 10px;
+  }
+
+  .bj-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 14px 14px 28px;
+    gap: 10px;
+  }
+
+  /* ── 페이지 헤더 ── */
+  .bac-header,
+  .choice-header,
+  .best-header,
+  .hilo-header,
+  .gs-header,
+  .rl-header,
+  .pk-header,
+  .board-header,
+  .bj-header,
+  .sm-header {
+    padding: 18px 14px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .bac-page-title,
+  .choice-page-title,
+  .best-page-title,
+  .hilo-page-title,
+  .gs-page-title,
+  .rl-page-title,
+  .pk-page-title,
+  .board-page-title,
+  .bj-page-title,
+  .sm-page-title { font-size: 17px; }
+
+  /* ── 필터 칩 ── */
+  .bac-filters,
+  .bj-filters,
+  .choice-filters,
+  .gs-filter-right,
+  .rl-filter-right,
+  .hilo-filter-right {
+    padding: 10px 14px 0;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .filter-chip {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+
+  /* ── 카드 썸네일 공통 ── */
+  .dealer-thumb,
+  .show-thumb,
+  .bg-thumb,
+  .board-thumb,
+  .hilo-thumb,
+  .gs-thumb,
+  .rl-thumb,
+  .pk-thumb,
+  .bj-thumb,
+  .sm-thumb { aspect-ratio: 16/10; }
+
+  /* ── 카드 정보 텍스트 ── */
+  .dc-info, .sc-info, .bg-info, .board-info,
+  .hilo-info, .gs-info, .rl-info, .pk-info,
+  .bj-info, .sm-info { padding: 7px 9px; }
+
+  .dc-name, .sc-name, .bg-name, .board-name,
+  .hilo-name, .gs-name, .rl-name, .pk-name,
+  .bj-name, .sm-name { font-size: 11px; }
+
+  .dc-meta, .sc-meta, .bg-meta, .board-meta,
+  .hilo-meta, .gs-meta, .rl-meta, .pk-meta,
+  .bj-meta, .sm-meta { font-size: 10px; }
+
+  .dc-bead-road, .sc-bead-road,
+  .hilo-bead-road, .board-bead-road,
+  .bg-bead-road { min-height: 22px; padding: 4px 7px; }
+
+  .dc-bead, .sc-bead, .hilo-bead,
+  .board-bead, .bg-bead { width: 8px; height: 8px; }
+
+  /* ── 딜러 이모지 크기 조정 ── */
+  .dealer-emoji { font-size: 36px; }
+  .show-dealer  { font-size: 36px; }
+  .bgs-dealer   { font-size: 36px; }
+  .hilo-dealer-em { font-size: 34px; }
+  .pk-dealer-em   { font-size: 32px; }
+  .board-dealer-em{ font-size: 32px; }
+  .gs-main-icon   { font-size: 40px; }
+  .bj-dealer-em   { font-size: 32px; }
+
+  /* ── 블랙잭 좌석 ── */
+  .bj-seats { gap: 5px; }
+  .bj-seat  { width: 12px; height: 12px; font-size: 7px; }
+
+  /* ── 결과 티커 폰트 ── */
+  .gs-tick, .rl-tick, .hilo-tick,
+  .pk-tick, .board-tick, .bg-tick,
+  .craps-num, .sm-tick { font-size: 9px; padding: 2px 3px; min-width: 14px; }
+
+  /* ── 드롭다운 메뉴 ── */
+  .dropdown-menu { width: 190px; top: 46px; right: 10px; }
+  .dropdown-item { padding: 13px 16px; font-size: 13px; }
+
+  /* ── 인스턴트/1인칭 큰 텍스트 ── */
+  .sm-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+}
+
+/* ── 소형 모바일 (max-width: 390px) ── */
+@media (max-width: 390px) {
+  .cat-item { min-width: 52px; max-width: 64px; padding: 5px 6px; }
+  .cat-icon { font-size: 16px; }
+  .cat-label { font-size: 8px; }
+  .hero { height: 190px; }
+  .hero-game-title { font-size: 26px; }
+  .hero-game-emoji { font-size: 56px; }
+  .bac-grid, .choice-grid, .best-grid, .hilo-grid,
+  .gs-grid, .rl-grid, .pk-grid, .board-grid, .bj-grid,
+  .sm-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 10px 10px 24px; }
+  .game-show-grid { grid-template-columns: repeat(2, 1fr); padding: 0 10px; }
+  .section { padding: 16px 10px 0; }
+}
+
+
+/* 더블탭 줌 방지 */
+button, .cat-item, .game-card, .dealer-card, .show-card,
+.bj-card, .gs-card, .rl-card, .pk-card, .hilo-card,
+.board-card, .bg-card, .sm-card, .filter-chip {
+  touch-action: manipulation;
+}
+/* 스크롤 관성 전체 적용 */
+.scroll-row, .cat-nav {
+  -webkit-overflow-scrolling: touch;
+}
+/* 텍스트 선택 방지 (게임 카드 내) */
+.game-card, .dealer-card, .show-card, .bj-card,
+.gs-card, .rl-card, .pk-card, .hilo-card, .board-card,
+.bg-card, .sm-card {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="logo" onclick="goHome()"><span class="logo-icon">▶</span> Evolution</div>
+  <div class="search-box"><input type="text" placeholder="찾기"></div>
+  <div class="topbar-right">
+    <div class="user-count">👤 0</div>
+    <div class="balance" style="user-select:none;-webkit-user-select:none;cursor:default" onclick="return false;" oncontextmenu="return false;">🪙 ₩0</div>
+    <button class="menu-btn" id="menu-btn" onclick="toggleMenu(event)">☰</button>
+  </div>
+</nav>
+
+<!-- CATEGORY NAV -->
+<nav class="cat-nav">
+  <div class="cat-nav-inner">
+    <div class="cat-item active" onclick="switchPage('home',this)"><span class="cat-icon">✨</span><span class="cat-label">추천게임</span></div>
+    <div class="cat-item" onclick="switchPage('choice',this)"><span class="cat-icon">🏆</span><span class="cat-label">카지노 초이스</span></div>
+    <div class="cat-item" onclick="switchPage('best',this)"><span class="cat-icon">🎯</span><span class="cat-label">최고의 게임</span></div>
+    <div class="cat-item" onclick="switchPage('baccarat',this)"><span class="cat-icon">🃏</span><span class="cat-label">바카라 & 식보</span></div>
+    <div class="cat-item" onclick="switchPage('blackjack',this)"><span class="cat-icon" style="display:flex;align-items:center;justify-content:center;width:32px;height:24px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 28" width="28" height="22"><rect x="0" y="2" width="20" height="26" rx="2.5" ry="2.5" fill="#1e2236" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/><text x="3" y="9" font-family="serif" font-size="5.5" fill="#e8ecf4" font-weight="700">A</text><text x="3" y="14" font-family="serif" font-size="5" fill="#e8ecf4">&#9824;</text><rect x="15" y="0" width="20" height="26" rx="2.5" ry="2.5" fill="#1e2236" stroke="rgba(255,255,255,0.25)" stroke-width="0.8"/><text x="17.5" y="9" font-family="serif" font-size="5.5" fill="#e8ecf4" font-weight="700">J</text><text x="17.5" y="14" font-family="serif" font-size="5" fill="#e8ecf4">&#9824;</text></svg></span><span class="cat-label">블랙잭</span></div>
+    <div class="cat-item" onclick="switchPage('hilo',this)"><span class="cat-icon">🐉</span><span class="cat-label">하이 로 & 드래곤 타이거</span></div>
+    <div class="cat-item" onclick="switchPage('board',this)"><span class="cat-icon">♟️</span><span class="cat-label">보드 게임</span></div>
+    <div class="cat-item" onclick="switchPage('gameshow',this)"><span class="cat-icon">🎤</span><span class="cat-label">게임 쇼</span></div>
+    <div class="cat-item" onclick="switchPage('roulette',this)"><span class="cat-icon">🎡</span><span class="cat-label">룰렛</span></div>
+    <div class="cat-item" onclick="switchPage('poker',this)"><span class="cat-icon">♠️</span><span class="cat-label">포커</span></div>
+    <div class="cat-item" onclick="switchPage('instant',this)"><span class="cat-icon">⚡</span><span class="cat-label">인스턴트 게임</span></div>
+    <div class="cat-item" onclick="switchPage('firstperson',this)"><span class="cat-icon">👤</span><span class="cat-label">1인칭</span></div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-slides">
+      <div class="hero-slide active">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0a2e,#0d1b3e,#0a2a1a)"></div>
+        <div class="hero-game-emoji">🎡</div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-game-title">Funky Time</div>
+          <div class="hero-game-subtitle">Live Game Show</div>
+          <div class="hero-meta"><span class="hero-min-bet">₩200</span><span class="hero-players">👥 5,848명</span></div>
+          <button class="hero-btn">▶ 플레이</button>
+        </div>
+        <div class="hero-nav-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+      <div class="hero-slide">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#2a0a0a,#1a0d2e,#0a1a2a)"></div>
+        <div class="hero-game-emoji">🎲</div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-game-title">Crazy Time</div>
+          <div class="hero-game-subtitle">Live Game Show</div>
+          <div class="hero-meta"><span class="hero-min-bet">₩200</span><span class="hero-players">👥 11,529명</span></div>
+          <button class="hero-btn">▶ 플레이</button>
+        </div>
+        <div class="hero-nav-dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 여러분을 위한 최고의 선택 -->
+  <section class="section">
+    <div class="section-header"><h2 class="section-title">여러분을 위한 최고의 선택</h2><span class="section-more">모두보기 ›</span></div>
+    <div class="scroll-row-wrapper">
+      <button class="scroll-arrow left" onclick="scrollRow(this,-1)">‹</button>
+      <div class="scroll-row">
+        <div class="game-card"><div class="card-thumb bg-gold"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 스피드 바카라 A</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 104</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-dark"><span style="font-size:48px">🐉</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">코리안 드래곤타이거</div><div class="card-meta"><span class="card-bet">₩1,000</span><span>👥 44</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-teal"><span style="font-size:48px">🎣</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="card-info" style="padding-top:8px"><div class="card-name">얼음 낚시</div><div class="card-meta"><span class="card-bet">₩200</span><span>👥 12,492</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-blue"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">⚡</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">코리안 라이트닝 바카라</div><div class="card-meta"><span class="card-bet">₩2,000</span><span>👥 40</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-green"><span style="font-size:48px">🎩</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="card-info" style="padding-top:8px"><div class="card-name">MONOPOLY 빅 볼러</div><div class="card-meta"><span class="card-bet">₩200</span><span>👥 6,842</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-purple"><span style="font-size:48px">🎪</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="card-info" style="padding-top:8px"><div class="card-name">슈퍼 시코보</div><div class="card-meta"><span class="card-bet">₩400</span><span>👥 2,310</span></div></div></div>
+      </div>
+      <button class="scroll-arrow right" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </section>
+
+  <!-- 최근 게임 -->
+  <section class="section">
+    <div class="section-header"><h2 class="section-title">최근 게임</h2></div>
+    <div class="scroll-row-wrapper">
+      <button class="scroll-arrow left" onclick="scrollRow(this,-1)">‹</button>
+      <div class="scroll-row">
+        <div class="game-card"><div class="card-thumb bg-dark"><span style="font-size:48px">🐉</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">드래곤 타이거</div><div class="card-meta"><span class="card-bet">₩1,000</span><span>👥 613</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-red"><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">스피드 바카라 A</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 3,658</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-gold"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 코리안 스피드 바카라 C 🇰🇷</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 42</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-teal"><span style="font-size:48px">🎣</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="card-info" style="padding-top:8px"><div class="card-name">얼음 낚시</div><div class="card-meta"><span class="card-bet">₩200</span><span>👥 12,492</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-navy"><span style="font-size:48px">⚡🐉</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">코리안 라이트닝 드래곤 타이거</div><div class="card-meta"><span class="card-bet">₩1,000</span><span>👥 37</span></div></div></div>
+      </div>
+      <button class="scroll-arrow right" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </section>
+
+  <!-- 카지노 초이스 -->
+  <section class="section">
+    <div class="section-header"><h2 class="section-title">카지노 초이스</h2><span class="section-more">모두보기 ›</span></div>
+    <div class="scroll-row-wrapper">
+      <button class="scroll-arrow left" onclick="scrollRow(this,-1)">‹</button>
+      <div class="scroll-row">
+        <div class="game-card"><div class="card-thumb bg-gold"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 코리안 스피드 바카라 A 🇰🇷</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 1</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-red"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 코리안 스피드 바카라 B 🇰🇷</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 12</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-purple"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 코리안 스피드 바카라 C 🇰🇷</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 39</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-blue"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 스피드 바카라 A</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 104</span></div></div></div>
+        <div class="game-card"><div class="card-thumb bg-green"><span class="card-badge badge-exclusive">독점</span><span style="font-size:48px">🃏</span><button class="card-fav">♡</button><div class="card-overlay"></div><button class="card-play-btn">▶ 플레이</button></div><div class="bead-road br"></div><div class="card-info"><div class="card-name">Xclusive 스피드 바카라 B</div><div class="card-meta"><span class="card-bet">₩10,000</span><span>👥 59</span></div></div></div>
+      </div>
+      <button class="scroll-arrow right" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </section>
+
+  <!-- 게임 쇼 -->
+  <section class="section">
+    <div class="section-header"><h2 class="section-title">게임 쇼</h2><span class="section-more">모두보기 ›</span></div>
+    <div class="game-show-grid">
+      <div class="game-show-card"><div class="game-show-bg bg-red"><span>✈️</span></div><span class="card-badge badge-new" style="position:absolute;top:10px;left:10px">신규</span><div class="game-show-info"><div class="game-show-name">레드 배론</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩200</span><span>👥 302</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg bg-navy"><span>⚽</span></div><div class="game-show-info"><div class="game-show-name">EVO 파워볼 🇰🇷</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩2,000</span><span>👥 29</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg" style="background:linear-gradient(135deg,#1a0a28,#3a1060)"><span>🎡</span></div><div class="game-show-info"><div class="game-show-name">크레이지 타임</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩200</span><span>👥 11,529</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg bg-teal"><span>🎣</span></div><div class="game-show-info"><div class="game-show-name">얼음 낚시</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩200</span><span>👥 12,525</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg bg-blue"><span>🔵</span></div><div class="game-show-info"><div class="game-show-name">메가 볼</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩20</span><span>👥 579</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg bg-gold"><span>🐎</span></div><div class="game-show-info"><div class="game-show-name">레이스 트랙</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩200</span><span>👥 345</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg bg-purple"><span>🎩</span></div><div class="game-show-info"><div class="game-show-name">MONOPOLY 빅 볼러</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩200</span><span>👥 9,696</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+      <div class="game-show-card"><div class="game-show-bg bg-green"><span>⚾</span></div><div class="game-show-info"><div class="game-show-name">코리안 달러 베이스볼 스튜디오 🇰🇷</div><div class="game-show-meta"><span style="color:var(--accent-gold)">₩2,000</span><span>👥 9</span></div></div><button class="card-fav" style="position:absolute;top:10px;right:10px">♡</button></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-home -->
+
+
+<!-- ════════════════════════════════════════
+     BACCARAT & 식보 PAGE
+════════════════════════════════════════ -->
+<div id="page-baccarat" class="page">
+
+  <div class="bac-header">
+    <div class="bac-title-row">
+      <h1 class="bac-page-title">바카라 &amp; 식보</h1>
+      <button class="multi-play-btn">⊞ 멀티플레이</button>
+    </div>
+  </div>
+
+  <div class="bac-filters">
+    <div class="filter-chip active" onclick="setFilter(this)">스피드</div>
+    <div class="filter-chip" onclick="setFilter(this)">🔥 핫 테이블</div>
+    <div class="filter-chip" onclick="setFilter(this)">살롱 프라이빗</div>
+    <div class="filter-chip" onclick="setFilter(this)">엘리트 VIP 스피드 바카라</div>
+    <div class="filter-chip" onclick="setFilter(this)">▶ 최고의 게임</div>
+    <div class="filter-chip" onclick="setFilter(this)">네이티브 딜러</div>
+    <div class="filter-chip" onclick="setFilter(this)">신규</div>
+  </div>
+
+  <div class="bac-grid" id="bac-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-baccarat -->
+
+<!-- ════════════════════════════════════════
+     CASINO CHOICE PAGE
+════════════════════════════════════════ -->
+<div id="page-choice" class="page">
+
+  <div class="choice-header">
+    <h1 class="choice-page-title">카지노 초이스</h1>
+    <div style="display:flex;gap:8px">
+      <div class="filter-chip active" onclick="setFilterCtx(this,'choice')">스피드</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'choice')">살롱 프라이빗</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'choice')">네이티브 딜러</div>
+    </div>
+  </div>
+
+  <div class="choice-grid" id="choice-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-choice -->
+
+
+
+<!-- ════════════════════════════════════════
+     BEST GAMES PAGE
+════════════════════════════════════════ -->
+<div id="page-best" class="page">
+
+  <div class="best-header">
+    <h1 class="best-page-title">최고의 게임</h1>
+    <div class="best-filter-right">
+      <div class="filter-chip active" onclick="setFilterCtx(this,'best')">신규</div>
+    </div>
+  </div>
+
+  <div class="best-grid" id="best-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-best -->
+
+
+
+<!-- ════════════════════════════════════════
+     BLACKJACK PAGE
+════════════════════════════════════════ -->
+<div id="page-blackjack" class="page">
+
+  <div class="bj-header">
+    <h1 class="bj-page-title">블랙잭</h1>
+  </div>
+
+  <div class="bj-filters">
+    <div class="filter-chip active" onclick="setFilterCtx(this,'blackjack')">스피드</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">₩400–2,000</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">₩5,000–40,000</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">₩50,000+</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">살롱 프라이빗</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">네이티브 딜러</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">신규</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">프리 베팅</div>
+    <div class="filter-chip" onclick="setFilterCtx(this,'blackjack')">베팅스태커</div>
+  </div>
+
+  <div class="bj-grid" id="bj-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-blackjack -->
+
+
+
+<!-- ════════════════════════════════════════
+     BOARD GAME PAGE
+════════════════════════════════════════ -->
+<div id="page-board" class="page">
+
+  <div class="board-header">
+    <h1 class="board-page-title">보드 게임</h1>
+  </div>
+
+  <div class="board-grid" id="board-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-board -->
+
+
+<!-- ════════════════════════════════════════
+     HILO & DRAGON TIGER PAGE
+════════════════════════════════════════ -->
+<div id="page-hilo" class="page">
+
+  <div class="hilo-header">
+    <h1 class="hilo-page-title">하이 로 &amp; 드래곤타이거</h1>
+    <div class="hilo-filter-right">
+      <div class="filter-chip active" onclick="setFilterCtx(this,'hilo')">네이티브 딜러</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'hilo')">신규</div>
+    </div>
+  </div>
+
+  <div class="hilo-grid" id="hilo-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">▶ Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-hilo -->
+
+<!-- ════════════════════════════════════════
+     GAME SHOW PAGE
+════════════════════════════════════════ -->
+<div id="page-gameshow" class="page">
+
+  <div class="gs-header">
+    <h1 class="gs-page-title">게임 쇼</h1>
+    <div class="gs-filter-right">
+      <div class="filter-chip active" onclick="setFilterCtx(this,'gameshow')">네이티브 딜러</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'gameshow')">신규</div>
+    </div>
+  </div>
+
+  <div class="gs-grid" id="gs-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">&#9654; Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-gameshow -->
+
+<!-- ════════════════════════════════════════
+     ROULETTE PAGE
+════════════════════════════════════════ -->
+<div id="page-roulette" class="page">
+
+  <div class="rl-header">
+    <h1 class="rl-page-title">룰렛</h1>
+    <div class="rl-filter-right">
+      <div class="filter-chip active" onclick="setFilterCtx(this,'roulette')">스피드</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'roulette')">살롱 프라이빗</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'roulette')">네이티브 딜러</div>
+      <div class="filter-chip" onclick="setFilterCtx(this,'roulette')">자동</div>
+    </div>
+  </div>
+
+  <div class="rl-grid" id="rl-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">&#9654; Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-roulette -->
+
+<!-- ════════════════════════════════════════
+     POKER PAGE
+════════════════════════════════════════ -->
+<div id="page-poker" class="page">
+
+  <div class="pk-header">
+    <h1 class="pk-page-title">포커</h1>
+  </div>
+
+  <div class="pk-grid" id="pk-grid"></div>
+
+  <footer style="margin-top:0">
+    <div class="footer-logo">&#9654; Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+
+</div><!-- /page-poker -->
+
+<!-- ════════════════════════════════════════
+     INSTANT GAME PAGE
+════════════════════════════════════════ -->
+<div id="page-instant" class="page">
+  <div class="sm-header">
+    <h1 class="sm-page-title">인스턴트 게임</h1>
+  </div>
+  <div class="sm-grid" id="instant-grid"></div>
+  <footer style="margin-top:0">
+    <div class="footer-logo">&#9654; Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+</div><!-- /page-instant -->
+
+<!-- ════════════════════════════════════════
+     FIRST PERSON PAGE
+════════════════════════════════════════ -->
+<div id="page-firstperson" class="page">
+  <div class="sm-header">
+    <h1 class="sm-page-title">1인칭</h1>
+  </div>
+  <div class="sm-grid" id="firstperson-grid"></div>
+  <footer style="margin-top:0">
+    <div class="footer-logo">&#9654; Evolution</div>
+    <p class="footer-text">Evolution은 세계 최고의 라이브 카지노 솔루션 제공업체입니다.<br>본 사이트는 데모용으로 제작된 클론 사이트입니다. 실제 베팅이 이루어지지 않습니다.<br>만 18세 미만은 이용하실 수 없습니다.</p>
+  </footer>
+</div><!-- /page-firstperson -->
+</main>
+
+<script>
+/* PAGE SWITCH */
+function switchPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function goHome() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  document.querySelectorAll('.cat-item').forEach((i, idx) => i.classList.toggle('active', idx === 0));
+  window.scrollTo(0, 0);
+}
+
+
+/* FILTER - context aware */
+function setFilter(el) {
+  const parent = el.closest('#page-baccarat');
+  const chips = parent ? parent.querySelectorAll('.filter-chip') : document.querySelectorAll('#page-baccarat .filter-chip');
+  chips.forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+function setFilterCtx(el, ctx) {
+  const parent = document.getElementById('page-' + ctx);
+  if (parent) parent.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+
+/* BEAD ROAD */
+function genBeads(el, cls, count) {
+  el.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const r = Math.random();
+    const c = r < 0.48 ? 'bead-p' : r < 0.90 ? 'bead-b' : 'bead-t';
+    const d = document.createElement('div');
+    d.className = cls + ' ' + c;
+    el.appendChild(d);
+  }
+}
+function fillAllBeads() {
+  document.querySelectorAll('.bead-road.br').forEach(el => genBeads(el, 'bead', 24));
+  document.querySelectorAll('.dc-bead-road').forEach(el => genBeads(el, 'dc-bead', 30));
+}
+
+/* HERO */
+let slide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+setInterval(() => {
+  slides[slide].classList.remove('active');
+  slide = (slide + 1) % slides.length;
+  slides[slide].classList.add('active');
+}, 5000);
+
+/* SCROLL ROW */
+function scrollRow(btn, dir) {
+  btn.closest('.scroll-row-wrapper').querySelector('.scroll-row')
+    .scrollBy({ left: dir * 680, behavior: 'smooth' });
+}
+
+/* FAV TOGGLE */
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('card-fav')) {
+    e.stopPropagation();
+    const on = e.target.textContent === '♥';
+    e.target.textContent = on ? '♡' : '♥';
+    e.target.style.color = on ? '' : '#e63946';
+  }
+});
+
+/* BACCARAT GAME DATA */
+const bacGames = [
+  // 1열 - Xclusive 코리안 독점
+  { badge:'exclusive', felt:'felt-gold2',   em:'👩‍💼',   name:'Xclusive 코리안 스피드 바카라 C 🇰🇷', bet:'₩10,000', p:25   },
+  { badge:'exclusive', felt:'felt-red2',    em:'🧑‍💼',   name:'Xclusive 코리안 스피드 바카라 B 🇰🇷', bet:'₩10,000', p:11   },
+  { badge:'exclusive', felt:'felt-gold2',   em:'👩',     name:'Xclusive 코리안 스피드 바카라 A 🇰🇷', bet:'₩10,000', p:9    },
+  { badge:'exclusive', felt:'felt-dark2',   em:'🧑',     name:'Xclusive 스피드 바카라 A',            bet:'₩10,000', p:51   },
+  { badge:'exclusive', felt:'felt-forest2', em:'👩🏽',   name:'Xclusive 스피드 바카라 B',            bet:'₩10,000', p:73   },
+  // 2열 - Xclusive speed 독점
+  { badge:'exclusive', felt:'felt-maroon2', em:'👩🏻',   name:'Xclusive 스피드 바카라 C',            bet:'₩10,000', p:52   },
+  { badge:'exclusive', felt:'felt-maroon2', em:'👩🏽',   name:'Xclusive 스피드 바카라 D',            bet:'₩10,000', p:39   },
+  { badge:'exclusive', felt:'felt-maroon2', em:'👩🏼',   name:'Xclusive 스피드 바카라 E',            bet:'₩10,000', p:35   },
+  { badge:'exclusive', felt:'felt-maroon2', em:'👩🏾',   name:'Xclusive 스피드 바카라 F',            bet:'₩10,000', p:3    },
+  { badge:'exclusive', felt:'felt-maroon2', em:'👩🏿',   name:'Xclusive 스피드 바카라 G',            bet:'₩10,000', p:10   },
+  // 3열
+  { badge:'none',      felt:'felt-forest2', em:'🧑🏻‍💼', name:'코리안 스피드 바카라 B 🇰🇷',          bet:'₩10,000', p:280  },
+  { badge:'none',      felt:'felt-gold2',   em:'👩🏻',   name:'스피드 바카라 A',                     bet:'₩10,000', p:2552 },
+  { badge:'none',      felt:'felt-indigo2', em:'🎲',     name:'슈퍼 식보',                           bet:'₩400',    p:1353 },
+  { badge:'none',      felt:'felt-dark2',   em:'🧑🏻‍💼', name:'코리안 번영의 나무 바카라 🇰🇷',        bet:'₩2,000',  p:212  },
+  { badge:'none',      felt:'felt-forest2', em:'🧑🏻‍💼', name:'번영의 나무 바카라',                   bet:'₩2,000',  p:326  },
+  // 4열
+  { badge:'none',      felt:'felt-gold2',   em:'👩🏻',   name:'코리안 스피드 바카라 A 🇰🇷',          bet:'₩10,000', p:240  },
+  { badge:'none',      felt:'felt-gold2',   em:'🧑🏻‍💼', name:'코리안 스피드 바카라 C 🇰🇷',          bet:'₩10,000', p:93   },
+  { badge:'none',      felt:'felt-red2',    em:'👩🏽',   name:'스피드 바카라 B',                     bet:'₩10,000', p:474  },
+  { badge:'none',      felt:'felt-red2',    em:'👩🏼',   name:'스피드 바카라 C',                     bet:'₩10,000', p:155  },
+  { badge:'none',      felt:'felt-dark2',   em:'🐉',     name:'코리안 드래곤타이거',                  bet:'₩1,000',  p:32   },
+  // 5열
+  { badge:'none',      felt:'felt-navy2',   em:'🐉',     name:'드래곤 타이거',                       bet:'₩1,000',  p:846  },
+  { badge:'none',      felt:'felt-red2',    em:'9️⃣',    name:'올웨이즈 9 바카라',                   bet:'₩2,000',  p:192  },
+  { badge:'none',      felt:'felt-red2',    em:'8️⃣',    name:'올웨이즈 8 바카라',                   bet:'₩2,000',  p:125  },
+  { badge:'salon',     felt:'felt-dark2',   em:'🧑🏻',   name:'살롱 프라이빗 바카라 E',               bet:'₩100만',  p:1    },
+  { badge:'none',      felt:'felt-wine2',   em:'🎴',     name:'판탄',                                bet:'₩400',    p:2760 },
+];
+
+function buildBacGrid() {
+  const grid = document.getElementById('bac-grid');
+  grid.innerHTML = bacGames.map(g => {
+    const badge = g.badge === 'exclusive'
+      ? `<span class="card-badge badge-exclusive">독점</span>`
+      : g.badge === 'salon'
+      ? `<span class="card-badge badge-salon">살롱 프라이빗</span>`
+      : '';
+    return `
+      <div class="dealer-card">
+        <div class="dealer-thumb">
+          <div class="felt-scene ${g.felt}">
+            <span class="wm">WHITE</span>
+            <div class="felt-table">
+              <span class="felt-table-label">PLAYER</span>
+              <span class="felt-table-label">BANKER</span>
+            </div>
+            <div class="dealer-fig">
+              <div class="dealer-emoji${g.em.length > 3 ? ' sm' : ''}">${g.em}</div>
+            </div>
+          </div>
+          ${badge}
+          <button class="card-fav">♡</button>
+          <div class="dc-overlay"></div>
+          <button class="dc-play">▶ 플레이</button>
+        </div>
+        <div class="dc-bead-road"></div>
+        <div class="dc-info">
+          <div class="dc-name">${g.name}</div>
+          <div class="dc-meta">
+            <span class="dc-bet">${g.bet}</span>
+            <span>👥 ${g.p.toLocaleString()}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+
+/* CASINO CHOICE GAME DATA */
+const choiceGames = [
+  // Row 1 - Xclusive 독점 바카라
+  { type:'dealer', badge:'exclusive', scene:'scene-bac',    em:'🧑‍💼', name:'Xclusive 코리안 스피드 바카라 C 🇰🇷', bet:'₩10,000', p:6   },
+  { type:'dealer', badge:'exclusive', scene:'scene-red',    em:'👩🏽',  name:'Xclusive 스피드 바카라 A',            bet:'₩10,000', p:5   },
+  { type:'dealer', badge:'exclusive', scene:'scene-red',    em:'👩🏼',  name:'Xclusive 스피드 바카라 B',            bet:'₩10,000', p:7   },
+  { type:'dealer', badge:'exclusive', scene:'scene-red',    em:'👩🏾',  name:'Xclusive 스피드 바카라 C',            bet:'₩10,000', p:18  },
+  { type:'dealer', badge:'exclusive', scene:'scene-bac',    em:'👩🏻',  name:'Xclusive 스피드 바카라 D',            bet:'₩10,000', p:7   },
+  // Row 2
+  { type:'dealer', badge:'exclusive', scene:'scene-red',    em:'👩🏻',  name:'Xclusive 스피드 바카라 E',            bet:'₩10,000', p:6   },
+  { type:'dealer', badge:'exclusive', scene:'scene-dark',   em:'🧑🏻',  name:'Xclusive 스피드 바카라 F',            bet:'₩10,000', p:5   },
+  { type:'dealer', badge:'exclusive', scene:'scene-red',    em:'👩',    name:'Xclusive 스피드 바카라 G',            bet:'₩10,000', p:5   },
+  { type:'dealer', badge:'none',      scene:'scene-forest', em:'🧑🏻‍💼',name:'코리안 번영의 나무 바카라 🇰🇷',       bet:'₩2,000',  p:66  },
+  { type:'dealer', badge:'none',      scene:'scene-forest', em:'🧑🏻‍💼',name:'코리안 스피드 바카라 A 🇰🇷',          bet:'₩10,000', p:130 },
+  // Row 3
+  { type:'dealer', badge:'none',      scene:'scene-bac',    em:'👩🏻',  name:'코리안 스피드 바카라 B 🇰🇷',          bet:'₩10,000', p:205 },
+  { type:'dealer', badge:'none',      scene:'scene-bac',    em:'👩🏽',  name:'코리안 스피드 바카라 C 🇰🇷',          bet:'₩10,000', p:66  },
+  { type:'dealer', badge:'salon',     scene:'scene-amber',  em:'👩🏽',  name:'코리안 살롱 프라이빗 바카라 🇰🇷',      bet:'₩100만',  p:3   },
+  { type:'show',   badge:'none',      scene:'scene-purple', em:'⚡',    name:'라이트닝 스톰',                       bet:'₩100',    p:1499, ticker:['16','▲','15','7','5','3','5','3'] },
+  { type:'show',   badge:'none',      scene:'scene-slate',  em:'🎩',    name:'MONOPOLY 빅 볼러',                   bet:'₩200',    p:3557 },
+  // Row 4
+  { type:'show',   badge:'none',      scene:'scene-green',  em:'🎱',    name:'구슬 레이스',                         bet:'₩200',    p:58,  ticker:['⚫','🟢','🔴','🔴','🟡','🟢','⚫','🔵','⚫','⚪'] },
+  { type:'show',   badge:'none',      scene:'scene-slate',  em:'🐎',    name:'레이스 트랙',                         bet:'₩200',    p:146, ticker:['3','1','4','1','2','3','5','2','1','4','4','1'] },
+  { type:'show',   badge:'none',      scene:'scene-purple', em:'🎡',    name:'크레이지 타임',                       bet:'₩200',    p:6922 },
+  { type:'show',   badge:'none',      scene:'scene-purple', em:'🎡',    name:'크레이지 타임 A',                     bet:'₩200',    p:1687 },
+  { type:'show',   badge:'none',      scene:'scene-amber',  em:'🎡',    name:'펑키 타임',                           bet:'₩200',    p:2447 },
+  // Row 5
+  { type:'show',   badge:'none',      scene:'scene-wine',   em:'🎴',    name:'판탄',                                bet:'₩400',    p:269  },
+  { type:'dealer', badge:'none',      scene:'scene-dark',   em:'🐉',    name:'라이트닝 드래곤 타이거',               bet:'₩1,000',  p:141  },
+  { type:'show',   badge:'none',      scene:'scene-slate',  em:'⚔️',    name:'전쟁',                                bet:'₩1,000',  p:20   },
+  { type:'dealer', badge:'none',      scene:'scene-indigo', em:'⚡',    name:'XXXtreme 라이트닝 바카라',             bet:'₩2,000',  p:134  },
+  { type:'dealer', badge:'none',      scene:'scene-forest', em:'🧑🏻‍💼',name:'번영의 나무 바카라',                   bet:'₩2,000',  p:106  },
+];
+
+function buildChoiceGrid() {
+  const grid = document.getElementById('choice-grid');
+  grid.innerHTML = choiceGames.map(g => {
+    const badge = g.badge === 'exclusive'
+      ? `<span class="card-badge badge-exclusive">독점</span>`
+      : g.badge === 'salon'
+      ? `<span class="card-badge badge-salon">살롱 프라이빗</span>`
+      : '';
+
+    if (g.type === 'dealer') {
+      return `
+        <div class="show-card">
+          <div class="show-thumb">
+            <div class="show-scene ${g.scene}">
+              <span class="wm">WHITE</span>
+              <div class="show-table-bar">
+                <span class="show-table-label">PLAYER</span>
+                <span class="show-table-label">BANKER</span>
+              </div>
+              <div class="show-dealer${g.em.length > 3 ? ' sm' : ''}">${g.em}</div>
+            </div>
+            ${badge}
+            <button class="card-fav">♡</button>
+            <div class="sc-overlay"></div>
+            <button class="sc-play">▶ 플레이</button>
+          </div>
+          <div class="sc-bead-road"></div>
+          <div class="sc-info">
+            <div class="sc-name">${g.name}</div>
+            <div class="sc-meta"><span class="sc-bet">${g.bet}</span><span>👥 ${g.p.toLocaleString()}</span></div>
+          </div>
+        </div>`;
+    } else {
+      // game show card
+      const tickerHtml = g.ticker
+        ? `<div class="result-ticker">${g.ticker.map((t,i) => {
+            const colors = ['#e74c3c','#3498db','#f39c12','#2ecc71','#9b59b6','#e67e22','#1abc9c','#34495e'];
+            const bg = colors[i % colors.length];
+            return `<span class="rtick" style="background:${bg};color:#fff">${t}</span>`;
+          }).join('')}</div>`
+        : '';
+      const icons = {
+        '라이트닝 스톰':'⚡🌩️','MONOPOLY 빅 볼러':'🎩','구슬 레이스':'🎱',
+        '레이스 트랙':'🐎','크레이지 타임':'🎡','크레이지 타임 A':'🎡',
+        '펑키 타임':'🎡','판탄':'🎴','전쟁':'⚔️'
+      };
+      const sceneBg = {
+        'scene-purple':'linear-gradient(135deg,#120824,#281050)',
+        'scene-slate':'linear-gradient(135deg,#0c1018,#1a2030)',
+        'scene-amber':'linear-gradient(135deg,#1a1004,#3a2808)',
+        'scene-green':'linear-gradient(135deg,#061208,#143020)',
+        'scene-wine':'linear-gradient(135deg,#1a0412,#360828)',
+        'scene-indigo':'linear-gradient(135deg,#0a0820,#1a1440)',
+      };
+      const bg = sceneBg[g.scene] || 'linear-gradient(135deg,#111,#222)';
+      return `
+        <div class="show-card">
+          <div class="show-game-thumb" style="background:${bg}">
+            <span style="font-size:54px;filter:drop-shadow(0 0 20px rgba(255,255,255,0.2))">${icons[g.name]||g.em}</span>
+            ${tickerHtml}
+            ${badge}
+            <button class="card-fav">♡</button>
+            <div class="sc-overlay"></div>
+            <button class="sc-play">▶ 플레이</button>
+          </div>
+          <div class="show-game-info">
+            <div class="show-game-name">${g.name}</div>
+            <div class="show-game-meta"><span class="show-game-bet">${g.bet}</span><span>👥 ${g.p.toLocaleString()}</span></div>
+          </div>
+        </div>`;
+    }
+  }).join('');
+}
+
+
+function fillChoiceBeads() {
+  document.querySelectorAll('.sc-bead-road').forEach(el => genBeads(el, 'sc-bead', 28));
+}
+
+
+/* BEST GAMES DATA */
+const bestGames = [
+  // Row 1
+  { type:'show',   badge:'new',  scene:'#0e0c1a',  em:'✈️',   name:'레드 배론',             bet:'₩200',    p:165,  ticker:['4.81','1.00','2.67','1.11','4.60','1.20','4.73'], tickerStyle:'multi' },
+  { type:'show',   badge:'new',  scene:'#1a0c06',  em:'🐉',   name:'용용',                  bet:'₩1,000',  p:49   },
+  { type:'dealer', badge:'none', scene:'scene-forest', em:'👩🏻', name:'코리안 스피드 바카라 B 🇰🇷', bet:'₩10,000', p:195, hasBead:true },
+  { type:'show',   badge:'none', scene:'#1a0c10',  em:'⚡🐉', name:'라이트닝 드래곤 타이거',   bet:'₩1,000',  p:140, tickerHasBeads:true },
+  { type:'show',   badge:'none', scene:'#0a1204',  em:'🐎',   name:'레이스 트랙',             bet:'₩200',    p:164,  ticker:['3','3','5','4','1','3','1','3','2','3','4','1'], tickerStyle:'nums' },
+  // Row 2
+  { type:'show',   badge:'none', scene:'#1a0820',  em:'🎡',   name:'크레이지 타임',            bet:'₩200',    p:7067, ticker:['1','2','1','5','🔵','2','1','⊙','10','🔴','🔴','1','2'], tickerStyle:'nums' },
+  { type:'dealer', badge:'none', scene:'scene-indigo', em:'⚡', name:'라이트닝 바카라',        bet:'₩2,000',  p:204, hasBead:true },
+  { type:'show',   badge:'none', scene:'#071a1a',  em:'🎣',   name:'얼음 낚시',               bet:'₩200',    p:5036 },
+  { type:'show',   badge:'none', scene:'#1a0608',  em:'🎲',   name:'슈퍼 식보',               bet:'₩400',    p:390  },
+  { type:'show',   badge:'none', scene:'#0c1a0a',  em:'🎩',   name:'MONOPOLY 빅 볼러',        bet:'₩200',    p:3502 },
+  // Row 3
+  { type:'dealer', badge:'none', scene:'scene-red',   em:'👩🏻', name:'배보',                  bet:'₩2,000',  p:2462, hasBead:true },
+  { type:'show',   badge:'none', scene:'#0c1018',  em:'⚡',   name:'라이트닝 스톰',            bet:'₩100',    p:1689, ticker:['8','3','10x','3','16','3','3','15','7','3','5'], tickerStyle:'nums' },
+  { type:'show',   badge:'none', scene:'#071418',  em:'🎰',   name:'오토 룰렛',               bet:'₩200',    p:1189, ticker:['0','12','20','25','12','5','7','4','24','26','29','29','28'], tickerStyle:'roul' },
+  { type:'show',   badge:'none', scene:'#061218',  em:'♠️',   name:'카지노 홀덤',              bet:'₩1,000',  p:121  },
+  { type:'show',   badge:'none', scene:'#0a1a14',  em:'🔵',   name:'메가 볼',                 bet:'₩20',     p:388,  ticker:['5x','12x','10x','5x','12x','5x','5x','25x','15x','12x'], tickerStyle:'mult2' },
+  // Row 4
+  { type:'dealer', badge:'none', scene:'scene-wine',  em:'🎴', name:'판탄',                   bet:'₩400',    p:265, hasBead:false },
+  { type:'show',   badge:'none', scene:'#1a0820',  em:'🎡',   name:'펑키 타임',                bet:'₩200',    p:2540, ticker:['A','E','E','N','1','I','N','1','2+','1'], tickerStyle:'funky' },
+  { type:'show',   badge:'none', scene:'#060c1a',  em:'⬛',   name:'인피니티 블랙잭',           bet:'₩5,000',  p:217  },
+  { type:'show',   badge:'none', scene:'#0a0c14',  em:'🎡',   name:'이머지브 룰렛',             bet:'₩1,000',  p:720,  ticker:['5','6','28','7','22','16','18','19','28','1','33','23','25'], tickerStyle:'roul' },
+  { type:'show',   badge:'none', scene:'#0a0c14',  em:'🎡',   name:'룰렛',                    bet:'₩1,000',  p:203,  ticker:['36','8','22','15','35','21','23','22','32','25','15','35','7'], tickerStyle:'roul' },
+  // Row 5
+  { type:'show',   badge:'none', scene:'#1a0820',  em:'🎱',   name:'크레이지 볼',              bet:'₩200',    p:2077 },
+  { type:'show',   badge:'none', scene:'#0a1410',  em:'⚽',   name:'EVO 파워볼 🇰🇷',          bet:'₩2,000',  p:17   },
+];
+
+const ROUL_COLORS = {
+  '0':'#2ecc71','00':'#2ecc71',
+  '1':'#e74c3c','2':'#2c3e50','3':'#e74c3c','4':'#2c3e50','5':'#e74c3c','6':'#2c3e50','7':'#e74c3c','8':'#2c3e50','9':'#e74c3c','10':'#2c3e50',
+  '11':'#2c3e50','12':'#e74c3c','13':'#2c3e50','14':'#e74c3c','15':'#2c3e50','16':'#e74c3c','17':'#2c3e50','18':'#e74c3c','19':'#e74c3c','20':'#2c3e50',
+  '21':'#e74c3c','22':'#2c3e50','23':'#e74c3c','24':'#2c3e50','25':'#e74c3c','26':'#2c3e50','27':'#e74c3c','28':'#2c3e50','29':'#2c3e50','30':'#e74c3c',
+  '31':'#2c3e50','32':'#e74c3c','33':'#2c3e50','34':'#e74c3c','35':'#2c3e50','36':'#e74c3c',
+};
+
+function makeTicker(g) {
+  if (!g.ticker) return '';
+  const style = g.tickerStyle || 'nums';
+  if (style === 'multi') {
+    const [cur, ...rest] = g.ticker;
+    return `<div class="multi-ticker">
+      <span class="multi-cur">${cur}</span>
+      <div class="multi-rest">${rest.map(n=>`<span class="multi-num">${n}</span>`).join('')}</div>
+    </div>`;
+  }
+  if (style === 'roul') {
+    return `<div class="bg-ticker">${g.ticker.map(n=>{
+      const bg = ROUL_COLORS[n]||'#2c3e50';
+      return `<span class="bg-tick" style="background:${bg};color:#fff">${n}</span>`;
+    }).join('')}</div>`;
+  }
+  if (style === 'mult2') {
+    return `<div class="bg-ticker">${g.ticker.map(n=>`<span class="bg-tick" style="background:rgba(0,212,255,0.2);color:var(--accent-cyan);border:1px solid rgba(0,212,255,0.3)">${n}</span>`).join('')}</div>`;
+  }
+  if (style === 'funky') {
+    const colors = ['#e74c3c','#f39c12','#2ecc71','#3498db','#9b59b6','#e67e22','#1abc9c'];
+    return `<div class="bg-ticker">${g.ticker.map((n,i)=>`<span class="bg-tick" style="background:${colors[i%colors.length]};color:#fff">${n}</span>`).join('')}</div>`;
+  }
+  // nums
+  const colors = ['#e74c3c','#3498db','#f39c12','#2ecc71','#9b59b6','#e67e22','#1abc9c','#2c3e50'];
+  return `<div class="bg-ticker">${g.ticker.map((n,i)=>`<span class="bg-tick" style="background:${colors[i%colors.length]};color:#fff">${n}</span>`).join('')}</div>`;
+}
+
+const SCENE_BG_MAP = {
+  'scene-forest':'linear-gradient(165deg,#061208,#0e2812)',
+  'scene-red':   'linear-gradient(165deg,#200608,#480c14)',
+  'scene-indigo':'linear-gradient(165deg,#0a0820,#1a1440)',
+  'scene-wine':  'linear-gradient(165deg,#1a0412,#360828)',
+};
+
+function buildBestGrid() {
+  const grid = document.getElementById('best-grid');
+  grid.innerHTML = bestGames.map(g => {
+    const badge = g.badge === 'new'
+      ? `<span class="card-badge badge-new">신규</span>`
+      : g.badge === 'exclusive'
+      ? `<span class="card-badge badge-exclusive">독점</span>`
+      : '';
+
+    const favBtn = `<button class="card-fav">♡</button>`;
+    const overlayPlay = `<div class="bg-overlay"></div><button class="bg-play">▶ 플레이</button>`;
+
+    if (g.type === 'dealer') {
+      const sceneBg = SCENE_BG_MAP[g.scene] || `linear-gradient(165deg,#111,#222)`;
+      return `
+        <div class="bg-card">
+          <div class="bg-thumb">
+            <div class="bgs-scene" style="background:${sceneBg}">
+              <span class="wm">WHITE</span>
+              <div class="bgs-table-bar">
+                <span class="bgs-table-label">PLAYER</span>
+                <span class="bgs-table-label">BANKER</span>
+              </div>
+              <div class="bgs-dealer">${g.em}</div>
+            </div>
+            ${badge}${favBtn}${overlayPlay}
+          </div>
+          ${g.hasBead ? '<div class="bg-bead-road bb"></div>' : ''}
+          <div class="bg-info">
+            <div class="bg-name">${g.name}</div>
+            <div class="bg-meta"><span class="bg-bet">${g.bet}</span><span>👥 ${g.p.toLocaleString()}</span></div>
+          </div>
+        </div>`;
+    } else {
+      const bg = g.scene.startsWith('scene-') ? (SCENE_BG_MAP[g.scene]||'#111') : g.scene;
+      const ticker = makeTicker(g);
+      return `
+        <div class="bg-card">
+          <div class="bg-thumb" style="background:${bg}">
+            <span style="font-size:54px;filter:drop-shadow(0 0 20px rgba(255,255,255,0.15))">${g.em}</span>
+            ${ticker}
+            ${badge}${favBtn}${overlayPlay}
+          </div>
+          <div class="bg-info">
+            <div class="bg-name">${g.name}</div>
+            <div class="bg-meta"><span class="bg-bet">${g.bet}</span><span>👥 ${g.p.toLocaleString()}</span></div>
+          </div>
+        </div>`;
+    }
+  }).join('');
+}
+
+function fillBestBeads() {
+  document.querySelectorAll('.bg-bead-road.bb').forEach(el => genBeads(el, 'bg-bead', 28));
+}
+
+
+/* BLACKJACK GAME DATA */
+const bjGames = [
+  // Row 1 - 첫줄
+  { scene:'bjs-navy',  table:'navy-t',   em:'👩🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 달러 파워 블랙잭 🇰🇷',   bet:'₩10,000', p:2   },
+  { scene:'bjs-green', table:'green-t',  em:'🧑🏻', logo:'Easy\nBLACKJACK', logoColor:'#f9c74f', badge:'none',  seats:7, taken:[],    name:'쉬운 블랙잭',                   bet:'₩2,000',  p:50  },
+  { scene:'bjs-dark',  table:'dark-t',   em:'👩🏽', logo:'INFINITE\nBLACKJACK', logoColor:'#90e0ef', badge:'none',  seats:7, taken:[],    name:'인피니티 블랙잭',               bet:'₩5,000',  p:189 },
+  { scene:'bjs-dark',  table:'dark-t',   em:'🎲',   logo:null,       badge:'none',  seats:0, craps:true, ticker:['9','6','7','11','6','9','10','4','8','6','9','11'], name:'크랩스', bet:'₩1,000', p:136 },
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏿', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 8',      bet:'₩10만',   p:0   },
+  // Row 2
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏻', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 6',      bet:'₩10만',   p:0   },
+  { scene:'bjs-red',   table:'red-t',    em:'👩🏽', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 A 🇰🇷',   bet:'₩40,000', p:0   },
+  { scene:'bjs-slate', table:'slate-t',  em:'🧑🏼', logo:null,       badge:'none',  seats:7, taken:[],    name:'Evo 스피드 블랙잭 4',           bet:'₩30,000', p:0   },
+  { scene:'bjs-slate', table:'slate-t',  em:'🧑🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'Evo 스피드 블랙잭 1',           bet:'₩30,000', p:0   },
+  { scene:'bjs-amber', table:'amber-t',  em:'👩🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 E 🇰🇷',   bet:'₩10만',   p:0   },
+  // Row 3
+  { scene:'bjs-amber', table:'amber-t',  em:'👩🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 I 🇰🇷',   bet:'₩10만',   p:0   },
+  { scene:'bjs-amber', table:'amber-t',  em:'👩🏽', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 J 🇰🇷',   bet:'₩10만',   p:0   },
+  { scene:'bjs-gold',  table:'gold-t',   em:'👩🏽', logo:null,       badge:'salon', seats:7, taken:[],    name:'코리안 플래티넘 프라이빗 블랙잭 1', bet:'₩40만', p:0  },
+  { scene:'bjs-navy',  table:'navy-t',   em:'🧑🏻', logo:'POWER\nBLACKJACK', logoColor:'#00d4ff', badge:'none',  seats:7, taken:[2], name:'파워 블랙잭', bet:'₩2,000', p:54 },
+  { scene:'bjs-maroon',table:'maroon-t', em:'🧑🏻', logo:'FREE BET\nBLACKJACK', logoColor:'#e63946', badge:'none',  seats:7, taken:[],    name:'인피니티 프리 베팅 블랙잭',     bet:'₩2,000',  p:140 },
+  // Row 4
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏻', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'인피니티 베팅 스태커 블랙잭',   bet:'₩2,000',  p:15  },
+  { scene:'bjs-teal',  table:'dark-t',   em:'🧑🏻', logo:'FUN FUN\n21', logoColor:'#f9c74f', badge:'none',  seats:7, taken:[1],   name:'인피니티 펀펀 21 블랙잭',       bet:'₩2,000',  p:28  },
+  { scene:'bjs-amber', table:'amber-t',  em:'🧑🏻‍💼',logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 C 🇰🇷',   bet:'₩50,000', p:0   },
+  { scene:'bjs-amber', table:'amber-t',  em:'👩🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 B 🇰🇷',   bet:'₩50,000', p:0   },
+  { scene:'bjs-amber', table:'amber-t',  em:'🧑🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 D 🇰🇷',   bet:'₩10만',   p:0   },
+  // Row 5
+  { scene:'bjs-amber', table:'amber-t',  em:'👩🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'코리안 스피드 블랙잭 M 🇰🇷',   bet:'₩20만',   p:0   },
+  { scene:'bjs-amber', table:'amber-t',  em:'👩🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'그랜드 코리안 스피드 블랙잭 🇰🇷', bet:'₩100만', p:0  },
+  { scene:'bjs-navy',  table:'navy-t',   em:'👩🏼', logo:'ALWAYS 6\nBLACKJACK', logoColor:'#90e0ef', badge:'new',   seats:7, taken:[],    name:'VIP 올웨이즈 6 블랙잭 1',       bet:'₩10만',   p:0   },
+  { scene:'bjs-navy',  table:'navy-t',   em:'🧑🏼', logo:'ALWAYS 6\nBLACKJACK', logoColor:'#90e0ef', badge:'new',   seats:7, taken:[],    name:'VIP 올웨이즈 6 블랙잭 3',       bet:'₩10만',   p:0   },
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏻', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 7',      bet:'₩10만',   p:0   },
+  // Row 6
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏻', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 5',      bet:'₩10만',   p:0   },
+  { scene:'bjs-navy',  table:'navy-t',   em:'🧑🏻', logo:'ALWAYS 6\nBLACKJACK', logoColor:'#90e0ef', badge:'new',   seats:7, taken:[],    name:'VIP 올웨이즈 6 블랙잭 2',       bet:'₩10만',   p:0   },
+  { scene:'bjs-maroon',table:'maroon-t', em:'🧑🏼', logo:'FREE BET\nBLACKJACK', logoColor:'#e63946', badge:'none',  seats:7, taken:[],    name:'프리베팅 VIP 블랙잭 A',         bet:'₩10만',   p:0   },
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏿', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 2',      bet:'₩10만',   p:0   },
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏾', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 4',      bet:'₩10만',   p:0   },
+  // Row 7
+  { scene:'bjs-gold',  table:'gold-t',   em:'🧑🏻', logo:'BET\nSTACKER', logoColor:'#f0b429', badge:'none',  seats:5, taken:[],    name:'VIP 베팅 스태커 블랙잭 3',      bet:'₩10만',   p:0   },
+  { scene:'bjs-slate', table:'slate-t',  em:'🧑🏾', logo:null,       badge:'none',  seats:7, taken:[],    name:'Evo 스피드 블랙잭 7',           bet:'₩30,000', p:0   },
+  { scene:'bjs-slate', table:'slate-t',  em:'🧑🏽', logo:null,       badge:'none',  seats:7, taken:[],    name:'Evo 스피드 블랙잭 5',           bet:'₩30,000', p:0   },
+  { scene:'bjs-slate', table:'slate-t',  em:'🧑🏻', logo:null,       badge:'none',  seats:7, taken:[],    name:'Evo 스피드 블랙잭 3',           bet:'₩30,000', p:0   },
+  { scene:'bjs-slate', table:'slate-t',  em:'👩🏽', logo:null,       badge:'none',  seats:7, taken:[],    name:'Evo 스피드 블랙잭 6',           bet:'₩30,000', p:0   },
+];
+
+function buildBjGrid() {
+  const grid = document.getElementById('bj-grid');
+  grid.innerHTML = bjGames.map(g => {
+    const badge = g.badge === 'new' ? `<span class="card-badge badge-new">신규</span>`
+      : g.badge === 'salon' ? `<span class="card-badge badge-salon">살롱 프라이빗</span>`
+      : g.badge === 'exclusive' ? `<span class="card-badge badge-exclusive">독점</span>` : '';
+
+    // 로고 오버레이
+    const logoHtml = g.logo ? (() => {
+      const lines = g.logo.split('\n');
+      return `<div class="bj-logo-overlay">
+        <div class="bj-logo-text" style="color:${g.logoColor||'#fff'}">${lines[0]}</div>
+        ${lines[1]?`<div class="bj-logo-sub" style="color:${g.logoColor||'#fff'}">${lines[1]}</div>`:''}
+      </div>`;
+    })() : '';
+
+    // 좌석
+    const seatsHtml = g.seats > 0 ? `<div class="bj-seats">${
+      Array.from({length:g.seats},(_,i)=>`<div class="bj-seat${(g.taken||[]).includes(i)?' taken':''}">👤</div>`).join('')
+    }</div>` : '';
+
+    // 크랩스 티커
+    const crapsHtml = g.craps ? `<div class="craps-ticker">
+      <span class="craps-on">ON</span>
+      ${(g.ticker||[]).map(n=>`<span class="craps-num">${n}</span>`).join('')}
+    </div>` : '';
+
+    return `<div class="bj-card">
+      <div class="bj-thumb">
+        <div class="bj-scene ${g.scene}">
+          <div class="bj-table ${g.table}"></div>
+          <div class="bj-table-text">BLACKJACK PAYS 3 TO 2</div>
+          ${logoHtml}
+          <div class="bj-dealer-wrap">
+            <div class="bj-dealer-em${g.em.length>3?' sm':''}">${g.em}</div>
+          </div>
+          ${seatsHtml}
+          ${crapsHtml}
+        </div>
+        ${badge}
+        <button class="card-fav">♡</button>
+        <div class="bj-ov"></div>
+        <button class="bj-play">▶ 플레이</button>
+      </div>
+      <div class="bj-info">
+        <div class="bj-name">${g.name}</div>
+        <div class="bj-meta">
+          <span class="bj-bet">${g.bet}</span>
+          ${g.p > 0 ? `<span>👥 ${g.p.toLocaleString()}</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+/* BOARD GAME DATA */
+const boardGames = [
+  // 이미지 1 기준 (좌→우, 위→아래)
+  { scene:'brd-wine',   table:'brd-t-maroon', em:'🧑🏻‍💼', logo:'FAN TAN',    logoColor:'#f0b429', badge:'none',  hasBead:false, ticker:['2','2','4','3','2','3','1','3','2','3','1','3','2','3','1'], tickerStyle:'fantan', name:'판탄',                     bet:'₩400',    p:265  },
+  { scene:'brd-dark',   table:'brd-t-dark',   em:'🧑🏻',   logo:'LIGHTNING\nSTORM', logoColor:'#00d4ff', badge:'none',  hasBead:false, ticker:['8','3','10x','3','16','3','3','15','7','3','5'], tickerStyle:'nums', name:'라이트닝 스톰',             bet:'₩100',    p:1689 },
+  { scene:'brd-teal',   table:'brd-t-teal',   em:'🎰',     logo:null,         logoColor:null,      badge:'none',  hasBead:false, ticker:['0','12','20','25','12','5','7','4','24','26','29','28'], tickerStyle:'roul', name:'오토 룰렛',                 bet:'₩200',    p:1189 },
+  { scene:'brd-slate',  table:'brd-t-dark',   em:'🧑🏻',   logo:"CASINO\nHOLDEM", logoColor:'#f0b429', badge:'none',  hasBead:false, ticker:null, name:'카지노 홀덤',               bet:'₩1,000',  p:121  },
+  { scene:'brd-dark',   table:'brd-t-dark',   em:'🔵',     logo:'MEGA\nBALL', logoColor:'#00d4ff', badge:'none',  hasBead:false, ticker:['5x','12x','10x','5x','12x','5x','25x','15x','12x'], tickerStyle:'mult', name:'메가 볼',                   bet:'₩20',     p:388  },
+  // Row 2
+  { scene:'brd-maroon', table:'brd-t-maroon', em:'🎴',     logo:'FAN TAN',    logoColor:'#f0b429', badge:'none',  hasBead:true,  ticker:['3','3','1','2','2','4','3','2','3','1','3','2','3','1'], tickerStyle:'fantan', name:'판탄 (세컨드 테이블)',       bet:'₩400',    p:102  },
+  { scene:'brd-dark',   table:'brd-t-dark',   em:'🎡',     logo:'FUNKY TIME', logoColor:'#f9c74f', badge:'none',  hasBead:false, ticker:['A','E','E','N','1','I','N','1'], tickerStyle:'funky', name:'펑키 타임',                 bet:'₩200',    p:2540 },
+  { scene:'brd-navy',   table:'brd-t-navy',   em:'⬛',     logo:'INFINITE\nBLACKJACK', logoColor:'#90e0ef', badge:'none',  hasBead:false, ticker:null, name:'인피니티 블랙잭',           bet:'₩5,000',  p:217  },
+  { scene:'brd-dark',   table:'brd-t-dark',   em:'🎡',     logo:'IMMERSIVE\nROULETTE', logoColor:'#e63946', badge:'none',  hasBead:false, ticker:['5','6','28','7','22','16','18','19','28','1','33','23','25'], tickerStyle:'roul', name:'이머지브 룰렛',             bet:'₩1,000',  p:720  },
+  { scene:'brd-slate',  table:'brd-t-dark',   em:'🎡',     logo:'ROULETTE',   logoColor:'#fff',    badge:'none',  hasBead:false, ticker:['36','8','22','15','35','21','23','22','32','25','15','35','7'], tickerStyle:'roul', name:'룰렛',                     bet:'₩1,000',  p:203  },
+  // Row 3
+  { scene:'brd-forest', table:'brd-t-forest', em:'🧑🏻‍💼', logo:null,         logoColor:null,      badge:'none',  hasBead:true,  ticker:null, name:'코리안 스피드 바카라 A 🇰🇷',  bet:'₩10,000', p:450  },
+  { scene:'brd-gold',   table:'brd-t-gold',   em:'🧑🏻‍💼', logo:null,         logoColor:null,      badge:'none',  hasBead:true,  ticker:null, name:'번영의 나무 바카라',           bet:'₩2,000',  p:420  },
+  { scene:'brd-red',    table:'brd-t-red',    em:'👩🏻',   logo:null,         logoColor:null,      badge:'none',  hasBead:true,  ticker:null, name:'드래곤 타이거',                bet:'₩1,000',  p:880  },
+  { scene:'brd-dark',   table:'brd-t-dark',   em:'🎱',     logo:'MARBLE\nRACE', logoColor:'#f9c74f', badge:'none',  hasBead:false, ticker:['⚫','🟢','🔴','🔴','🟡','🟢','⚫','🔵','⚫','⚪'], tickerStyle:'color', name:'구슬 레이스',               bet:'₩200',    p:58   },
+  { scene:'brd-green',  table:'brd-t-green',  em:'🧑🏻',   logo:'ANDAR BAHAR',logoColor:'#90e0ef', badge:'none',  hasBead:false, ticker:null, name:'안다르 바하르',               bet:'₩200',    p:95   },
+];
+
+function makeBoardTicker(g) {
+  if (!g.ticker) return '';
+  const s = g.tickerStyle || 'nums';
+  if (s === 'roul') {
+    const RB = {'0':'#2ecc71','00':'#2ecc71','32':'#e74c3c','15':'#2c3e50','19':'#e74c3c','4':'#2c3e50','21':'#e74c3c','2':'#2c3e50','25':'#e74c3c','17':'#2c3e50','34':'#e74c3c','6':'#2c3e50','27':'#e74c3c','13':'#2c3e50','36':'#e74c3c','11':'#2c3e50','30':'#e74c3c','8':'#2c3e50','23':'#e74c3c','10':'#2c3e50','5':'#e74c3c','24':'#2c3e50','16':'#e74c3c','33':'#2c3e50','1':'#e74c3c','20':'#2c3e50','14':'#e74c3c','31':'#2c3e50','9':'#e74c3c','22':'#2c3e50','18':'#e74c3c','29':'#2c3e50','7':'#e74c3c','28':'#2c3e50','12':'#e74c3c','35':'#2c3e50','3':'#e74c3c','26':'#2c3e50'};
+    return `<div class="board-ticker">${g.ticker.map(n=>`<span class="board-tick" style="background:${RB[n]||'#2c3e50'};color:#fff">${n}</span>`).join('')}</div>`;
+  }
+  if (s === 'fantan') {
+    const fc = ['#e74c3c','#3498db','#2ecc71','#f39c12'];
+    return `<div class="board-ticker">${g.ticker.map((n,i)=>`<span class="board-tick" style="background:${fc[(parseInt(n)-1)%4]||'#555'};color:#fff">${n}</span>`).join('')}</div>`;
+  }
+  if (s === 'mult') {
+    return `<div class="board-ticker">${g.ticker.map(n=>`<span class="board-tick" style="background:rgba(0,212,255,0.2);color:var(--accent-cyan);border:1px solid rgba(0,212,255,0.3)">${n}</span>`).join('')}</div>`;
+  }
+  if (s === 'funky') {
+    const fc2=['#e74c3c','#f39c12','#2ecc71','#3498db','#9b59b6','#e67e22','#1abc9c'];
+    return `<div class="board-ticker">${g.ticker.map((n,i)=>`<span class="board-tick" style="background:${fc2[i%fc2.length]};color:#fff">${n}</span>`).join('')}</div>`;
+  }
+  if (s === 'color') {
+    return `<div class="board-ticker">${g.ticker.map(n=>`<span class="board-tick" style="background:rgba(255,255,255,0.1);color:#fff;font-size:12px">${n}</span>`).join('')}</div>`;
+  }
+  // nums
+  const nc=['#e74c3c','#3498db','#f39c12','#2ecc71','#9b59b6','#e67e22','#1abc9c','#2c3e50'];
+  return `<div class="board-ticker">${g.ticker.map((n,i)=>`<span class="board-tick" style="background:${nc[i%nc.length]};color:#fff">${n}</span>`).join('')}</div>`;
+}
+
+function buildBoardGrid() {
+  const grid = document.getElementById('board-grid');
+  grid.innerHTML = boardGames.map(g => {
+    const badge = g.badge === 'new' ? `<span class="card-badge badge-new">신규</span>`
+      : g.badge === 'salon' ? `<span class="card-badge badge-salon">살롱 프라이빗</span>` : '';
+
+    const logoHtml = g.logo ? (() => {
+      const lines = g.logo.split('\n');
+      return `<div class="board-logo">
+        <div class="board-logo-text" style="color:${g.logoColor||'#fff'}">${lines[0]}</div>
+        ${lines[1]?`<div class="board-logo-sub" style="color:${g.logoColor||'#fff'}">${lines[1]}</div>`:''}
+      </div>`;
+    })() : '';
+
+    const ticker = makeBoardTicker(g);
+    const beadHtml = g.hasBead ? '<div class="board-bead-road bbd"></div>' : '';
+
+    return `<div class="board-card">
+      <div class="board-thumb">
+        <div class="board-scene ${g.scene}">
+          <div class="board-table ${g.table}"></div>
+          ${logoHtml}
+          <div class="board-dealer-wrap">
+            <div class="board-dealer-em${g.em.length>3?' sm':''}">${g.em}</div>
+          </div>
+          ${ticker}
+        </div>
+        ${badge}
+        <button class="card-fav">♡</button>
+        <div class="board-ov"></div>
+        <button class="board-play">▶ 플레이</button>
+      </div>
+      ${beadHtml}
+      <div class="board-info">
+        <div class="board-name">${g.name}</div>
+        <div class="board-meta">
+          <span class="board-bet">${g.bet}</span>
+          ${g.p > 0 ? `<span>👥 ${g.p.toLocaleString()}</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function fillBoardBeads() {
+  document.querySelectorAll('.board-bead-road.bbd').forEach(el => genBeads(el, 'board-bead', 28));
+}
+
+
+/* HILO & DRAGON TIGER DATA */
+const hiloGames = [
+  // Row 1 - 스크린샷 기준
+  { scene:'hls-red',    table:'hlt-red',    em:'👩🏽',  logo:'DRAGON\nDRAGON',     logoColor:'#f0b429', badge:'new',  hasBead:false, ticker:null,            name:'용용',                       bet:'₩1,000',  p:61  },
+  { scene:'hls-dark',   table:'hlt-dark',   em:'🧑🏻‍💼',logo:'Dragon\nTiger',       logoColor:'#f9c74f', badge:'none', hasBead:true,  ticker:null,            name:'코리안 드래곤타이거',          bet:'₩1,000',  p:20  },
+  { scene:'hls-maroon', table:'hlt-maroon', em:'👩🏽',  logo:'LIGHTNING\nDRAGON TIGER', logoColor:'#00d4ff', badge:'none', hasBead:true, ticker:null,          name:'코리안 라이트닝 드래곤 타이거', bet:'₩1,000',  p:9   },
+  { scene:'hls-green',  table:'hlt-green',  em:'👩🏻',  logo:'BASEBALL\nStudio',   logoColor:'#f0b429', badge:'none', hasBead:false, ticker:['홈','홈','홈','홈','아','아','●','●','아','아'], tickerStyle:'baseball', name:'코리안 달러 베이스볼 스튜디오 🇰🇷', bet:'₩2,000', p:1 },
+  { scene:'hls-red',    table:'hlt-red',    em:'👩🏻',  logo:'Dragon\nTiger',       logoColor:'#f9c74f', badge:'none', hasBead:true,  ticker:null,            name:'드래곤 타이거',                bet:'₩1,000',  p:317 },
+  // Row 2
+  { scene:'hls-maroon', table:'hlt-maroon', em:'👩🏾',  logo:'DRAGON TIGER\nPHOENIX', logoColor:'#f0b429', badge:'none', hasBead:true, ticker:null,           name:'드래곤 타이거 피닉스',         bet:'₩1,000',  p:15  },
+  { scene:'hls-gold',   table:'hlt-gold',   em:'👩🏽',  logo:'LIGHTNING\nDRAGON TIGER', logoColor:'#e63946', badge:'none', hasBead:true, ticker:null,          name:'라이트닝 드래곤 타이거',       bet:'₩1,000',  p:169 },
+  { scene:'hls-dark',   table:'hlt-dark',   em:'🧑🏽',  logo:'ANDAR\nBAHAR',        logoColor:'#90e0ef', badge:'none', hasBead:false, ticker:['B','🟤','🟠','🟠','🟠','🟠','🟠','🟠','🟠','🟠','🟠'], tickerStyle:'andar', name:'슈퍼 내부 외부',            bet:'₩1,000',  p:197 },
+  { scene:'hls-red',    table:'hlt-red',    em:'👩🏽',  logo:'SUPER SPEED\nDRAGON TIGER', logoColor:'#f0b429', badge:'none', hasBead:true, ticker:null,        name:'슈퍼 스피드 드래곤 타이거',   bet:'₩1,000',  p:39  },
+  { scene:'hls-slate',  table:'hlt-navy',   em:'🧑🏻',  logo:'WAR',                  logoColor:'#e63946', badge:'none', hasBead:false, ticker:null,            name:'전쟁',                        bet:'₩1,000',  p:19  },
+  // Row 3
+  { scene:'hls-navy',   table:'hlt-navy',   em:'🧑🏻',  logo:'FOOTBALL\nSTUDIO',   logoColor:'#3498db', badge:'none', hasBead:false, ticker:null,            name:'풋볼 스튜디오',                bet:'₩200',    p:420 },
+  { scene:'hls-dark',   table:'hlt-dark',   em:'👩🏻',  logo:'Dragon\nTiger',       logoColor:'#f9c74f', badge:'none', hasBead:true,  ticker:null,            name:'드래곤 타이거 B',              bet:'₩1,000',  p:88  },
+];
+
+function buildHiloGrid() {
+  const grid = document.getElementById('hilo-grid');
+  if (!grid) return;
+
+  grid.innerHTML = hiloGames.map(g => {
+    const badge = g.badge === 'new'
+      ? '<span class="card-badge badge-new">신규</span>'
+      : g.badge === 'exclusive'
+      ? '<span class="card-badge badge-exclusive">독점</span>'
+      : '';
+
+    const logoLines = g.logo ? g.logo.split('\n') : [];
+    const logoHtml = logoLines.length > 0
+      ? '<div class="hilo-logo">' +
+          '<div class="hilo-logo-text" style="color:' + (g.logoColor || '#fff') + '">' + logoLines[0] + '</div>' +
+          (logoLines[1] ? '<div class="hilo-logo-sub" style="color:' + (g.logoColor || '#fff') + '">' + logoLines[1] + '</div>' : '') +
+        '</div>'
+      : '';
+
+    // 티커
+    let tickerHtml = '';
+    if (g.ticker && g.ticker.length > 0) {
+      if (g.tickerStyle === 'baseball') {
+        const colors = { '홈':'#e74c3c', '아':'#3498db', '●':'#2c3e50' };
+        tickerHtml = '<div class="hilo-ticker">' +
+          g.ticker.map(function(n) {
+            return '<span class="hilo-tick" style="background:' + (colors[n] || '#555') + ';color:#fff">' + n + '</span>';
+          }).join('') + '</div>';
+      } else if (g.tickerStyle === 'andar') {
+        const ac = ['#2c3e50','#e74c3c','#f39c12','#2ecc71','#9b59b6','#e67e22','#1abc9c','#3498db'];
+        tickerHtml = '<div class="hilo-ticker">' +
+          g.ticker.map(function(n, i) {
+            return '<span class="hilo-tick" style="background:' + ac[i % ac.length] + ';color:#fff">' + n + '</span>';
+          }).join('') + '</div>';
+      }
+    }
+
+    const beadHtml = g.hasBead ? '<div class="hilo-bead-road hlb"></div>' : '';
+
+    return '<div class="hilo-card">' +
+      '<div class="hilo-thumb">' +
+        '<div class="hilo-scene ' + g.scene + '">' +
+          '<div class="hilo-table ' + g.table + '"></div>' +
+          logoHtml +
+          '<div class="hilo-dealer-wrap">' +
+            '<div class="hilo-dealer-em' + (g.em.length > 3 ? ' sm' : '') + '">' + g.em + '</div>' +
+          '</div>' +
+          tickerHtml +
+        '</div>' +
+        badge +
+        '<button class="card-fav">&#9825;</button>' +
+        '<div class="hilo-ov"></div>' +
+        '<button class="hilo-play">&#9654; 플레이</button>' +
+      '</div>' +
+      beadHtml +
+      '<div class="hilo-info">' +
+        '<div class="hilo-name">' + g.name + '</div>' +
+        '<div class="hilo-meta">' +
+          '<span class="hilo-bet">' + g.bet + '</span>' +
+          (g.p > 0 ? '<span>&#128101; ' + g.p.toLocaleString() + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function fillHiloBeads() {
+  document.querySelectorAll('.hilo-bead-road.hlb').forEach(function(el) {
+    genBeads(el, 'hilo-bead', 28);
+  });
+}
+
+
+/* GAME SHOW DATA */
+var gsGames = [
+  // Row 1
+  { bg:'gss-red',    icon:'✈️',   badge:'new',  name:'레드 배론',                bet:'₩200',   p:170,  ticker:['1.04','4.07','1.41','2.01','1.26','1.57','2.09'],          ts:'multi'   },
+  { bg:'gss-teal',   icon:'⚽',   badge:'none', name:'EVO 파워볼 🇰🇷',           bet:'₩2,000', p:15,   ticker:['89','8','75','1','80','4','75','9','74','1','83','4'],      ts:'nums'    },
+  { bg:'gss-green',  icon:'⚾',   badge:'none', name:'코리안 달러 베이스볼 스튜디오 🇰🇷', bet:'₩2,000', p:1, ticker:['아','무','아','🔴','아','아','🔴','아','아','아'], ts:'baseball' },
+  { bg:'gss-purple', icon:'🎡',   badge:'none', name:'크레이지 타임',             bet:'₩200',   p:5679, ticker:['10','1','1','5','1','🔵','🔵','5','1','2','1','1','1','1'], ts:'crazy'   },
+  { bg:'gss-cyan',   icon:'🎣',   badge:'none', name:'얼음 낚시',                 bet:'₩200',   p:4104, ticker:null, spin:true },
+  // Row 2
+  { bg:'gss-gold',   icon:'🔵',   badge:'none', name:'메가 볼',                   bet:'₩20',    p:411,  ticker:['5x','10x','12x','20x','50x','5x','5x','12x','15x','5x'],  ts:'mult'    },
+  { bg:'gss-slate',  icon:'🐎',   badge:'none', name:'레이스 트랙',               bet:'₩200',   p:159,  ticker:['2','2','4','2','2','2','3','1','1','1','1','3','1'],        ts:'race'    },
+  { bg:'gss-navy',   icon:'🎩',   badge:'none', name:'MONOPOLY 빅 볼러',          bet:'₩200',   p:3697, ticker:null },
+  { bg:'gss-dark',   icon:'⚡',   badge:'none', name:'라이트닝 스톰',             bet:'₩100',   p:2079, ticker:['5','12','6','5','3','9','3','3','9','20','3'],              ts:'nums'    },
+  { bg:'gss-orange', icon:'🎡',   badge:'none', name:'펑키 타임',                 bet:'₩200',   p:2283, ticker:['1','✔️','1','1','✔️','🎡','✔️','1','✔️','1','1'],          ts:'funky'   },
+  // Row 3
+  { bg:'gss-dark',   icon:'⚡🎰', badge:'none', name:'XXXtreme 라이트닝 룰렛',   bet:'₩400',   p:914,  ticker:['1','100x','35','26','50x','500x','24','100x','2','36','28','36'], ts:'roul' },
+  { bg:'gss-purple', icon:'🎡',   badge:'none', name:'크레이지 타임 A',           bet:'₩200',   p:1737, ticker:['1','2','2','2','1','1','1','1','5','10','5','2','5','2'],   ts:'crazy'   },
+  { bg:'gss-maroon', icon:'🎱',   badge:'none', name:'크레이지 볼',               bet:'₩200',   p:2267, ticker:null },
+  { bg:'gss-slate',  icon:'🎰',   badge:'none', name:'라이트닝 룰렛',             bet:'₩400',   p:888,  ticker:['18','100x','25','21','32','11','2','23','19','0','100x','20','22','34'], ts:'roul' },
+  { bg:'gss-gold',   icon:'🎩',   badge:'none', name:'MONOPOLY 라이브',           bet:'₩200',   p:767,  ticker:['4x','1','2','5','2%','10','10','2','1','2'],               ts:'mono'    },
+  // Row 4
+  { bg:'gss-dark',   icon:'🎲',   badge:'none', name:'라이트닝 다이스',           bet:'₩400',   p:228,  ticker:['16','14','9','13','7','9','9','10','16'],                   ts:'nums'    },
+  { bg:'gss-dark',   icon:'⚡🔵', badge:'none', name:'라이트닝 볼',               bet:'₩20',    p:39,   ticker:null },
+  { bg:'gss-red',    icon:'🎡',   badge:'none', name:'레드 도어 룰렛',            bet:'₩400',   p:645,  ticker:['32','12','32','17','35','100x','100x','31','8','6','23','4','13','5'], ts:'roul' },
+  { bg:'gss-green',  icon:'🎨',   badge:'none', name:'슈퍼 컬러 게임',            bet:'₩200',   p:112,  ticker:null },
+  { bg:'gss-navy',   icon:'⚽',   badge:'none', name:'축구 스튜디오',             bet:'₩1,000', p:559,  ticker:['아','홈','홈','홈','아','이','드','홈','아','드'],            ts:'baseball' },
+  // Row 5
+  { bg:'gss-purple', icon:'🎡',   badge:'none', name:'드림캐처',                  bet:'₩200',   p:207,  ticker:['1','1','2','20','2','1','1','1','1'],                       ts:'nums'    },
+  { bg:'gss-orange', icon:'🎰',   badge:'none', name:'슈퍼 칠리 에픽 스핀',       bet:'₩1,000', p:58,   ticker:null },
+  { bg:'gss-slate',  icon:'🎱',   badge:'none', name:'구슬 레이스',               bet:'₩200',   p:64,   ticker:null, marbles:true },
+  { bg:'gss-dark',   icon:'🎰',   badge:'none', name:'파이어볼 룰렛',             bet:'₩200',   p:74,   ticker:['2','17','🔴','9','15','20','26','6','10','6','34','27'],    ts:'roul'    },
+  { bg:'gss-red',    icon:'💰',   badge:'none', name:'크레이지 코인 플립',         bet:'₩200',   p:143,  ticker:null },
+  // Row 6
+  { bg:'gss-navy',   icon:'⚽🎲', badge:'none', name:'축구 스튜디오 주사위',      bet:'₩1,000', p:57,   ticker:['아','홈','홈','홈','아','이','드','홈','아','드'],            ts:'baseball' },
+  { bg:'gss-dark',   icon:'🃏',   badge:'none', name:'죽을 또는 생존: 사룬',      bet:'₩200',   p:35,   ticker:['4♠','1♥','8+','3♣','2♥','8+','8+','3♠','20x','50x','120x','50x','20x','20x','140x'], ts:'dead' },
+  { bg:'gss-maroon', icon:'🎰',   badge:'none', name:'크레이지 파친코',           bet:'₩200',   p:52,   ticker:null },
+  { bg:'gss-gold',   icon:'🎡',   badge:'exclusive', name:'임페리얼 퀘스트',      bet:'₩200',   p:17,   ticker:['40','1','1','10','1','1','1','1','1','1','7X'],             ts:'imperial' },
+  { bg:'gss-slate',  icon:'⚔️',   badge:'none', name:'전쟁',                      bet:'₩1,000', p:21,   ticker:null },
+  // Row 7
+  { bg:'gss-orange', icon:'🎈',   badge:'none', name:'풍선레이스',                bet:'₩200',   p:35,   ticker:null },
+  { bg:'gss-teal',   icon:'📈',   badge:'none', name:'주식 시장',                 bet:'₩200',   p:138,  ticker:['55%','46%','46%','56%','36%','62%','8%','65%','18%','95%'], ts:'stock'   },
+];
+
+/* 룰렛 색상 맵 */
+var ROUL_C = {'0':'#2ecc71','00':'#2ecc71','1':'#e74c3c','2':'#2c3e50','3':'#e74c3c','4':'#2c3e50','5':'#e74c3c','6':'#2c3e50','7':'#e74c3c','8':'#2c3e50','9':'#e74c3c','10':'#2c3e50','11':'#2c3e50','12':'#e74c3c','13':'#2c3e50','14':'#e74c3c','15':'#2c3e50','16':'#e74c3c','17':'#2c3e50','18':'#e74c3c','19':'#e74c3c','20':'#2c3e50','21':'#e74c3c','22':'#2c3e50','23':'#e74c3c','24':'#2c3e50','25':'#e74c3c','26':'#2c3e50','27':'#e74c3c','28':'#2c3e50','29':'#2c3e50','30':'#e74c3c','31':'#2c3e50','32':'#e74c3c','33':'#2c3e50','34':'#e74c3c','35':'#2c3e50','36':'#e74c3c'};
+
+function makeGsTicker(g) {
+  if (!g.ticker) return '';
+  var s = g.ts || 'nums';
+  var html = '<div class="gs-ticker">';
+
+  if (s === 'multi') {
+    html += '<span class="gs-tick" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3)">' + g.ticker[0] + '</span>';
+    for (var i = 1; i < g.ticker.length; i++) {
+      html += '<span class="gs-tick" style="background:none;color:#8892a4">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'roul') {
+    for (var i = 0; i < g.ticker.length; i++) {
+      var n = g.ticker[i];
+      var bg = ROUL_C[n] || '#e74c3c';
+      html += '<span class="gs-tick" style="background:' + bg + '">' + n + '</span>';
+    }
+  } else if (s === 'mult') {
+    for (var i = 0; i < g.ticker.length; i++) {
+      html += '<span class="gs-tick" style="background:rgba(0,212,255,0.2);color:var(--accent-cyan);border:1px solid rgba(0,212,255,0.3)">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'race') {
+    var rc = ['#e74c3c','#3498db','#f39c12','#2ecc71','#9b59b6','#e67e22','#1abc9c','#2c3e50'];
+    for (var i = 0; i < g.ticker.length; i++) {
+      html += '<span class="gs-tick" style="background:' + rc[i % rc.length] + '">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'baseball') {
+    var bc = {'아':'#3498db','무':'#2ecc71','홈':'#e74c3c','이':'#f39c12','드':'#9b59b6','🔴':'#e74c3c','🔵':'#3498db'};
+    for (var i = 0; i < g.ticker.length; i++) {
+      var n = g.ticker[i];
+      html += '<span class="gs-tick" style="background:' + (bc[n] || '#555') + '">' + n + '</span>';
+    }
+  } else if (s === 'crazy') {
+    var cc = ['#e74c3c','#3498db','#f39c12','#2ecc71','#9b59b6','#e67e22'];
+    for (var i = 0; i < g.ticker.length; i++) {
+      var n = g.ticker[i];
+      var bg = (n === '🔵') ? '#3498db' : cc[i % cc.length];
+      html += '<span class="gs-tick" style="background:' + bg + '">' + n + '</span>';
+    }
+  } else if (s === 'funky') {
+    var fc = ['#e74c3c','#f39c12','#2ecc71','#3498db','#9b59b6','#e67e22','#1abc9c'];
+    for (var i = 0; i < g.ticker.length; i++) {
+      html += '<span class="gs-tick" style="background:' + fc[i % fc.length] + '">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'mono') {
+    var mc = ['#e74c3c','#2c3e50','#3498db','#f39c12','#2ecc71','#9b59b6'];
+    for (var i = 0; i < g.ticker.length; i++) {
+      html += '<span class="gs-tick" style="background:' + mc[i % mc.length] + '">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'imperial') {
+    for (var i = 0; i < g.ticker.length; i++) {
+      var bg2 = (i === 0) ? '#f0b429' : (g.ticker[i] === '7X' ? '#e63946' : '#2c3e50');
+      html += '<span class="gs-tick" style="background:' + bg2 + '">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'dead') {
+    for (var i = 0; i < g.ticker.length; i++) {
+      var bg3 = (g.ticker[i].indexOf('x') > -1) ? '#9b59b6' : '#2c3e50';
+      html += '<span class="gs-tick" style="background:' + bg3 + '">' + g.ticker[i] + '</span>';
+    }
+  } else if (s === 'stock') {
+    for (var i = 0; i < g.ticker.length; i++) {
+      var v = parseFloat(g.ticker[i]);
+      var bg4 = (v >= 50) ? '#2ecc71' : (v >= 30) ? '#f39c12' : '#e74c3c';
+      html += '<span class="gs-tick" style="background:' + bg4 + '">' + g.ticker[i] + '</span>';
+    }
+  } else {
+    var nc = ['#e74c3c','#3498db','#f39c12','#2ecc71','#9b59b6','#e67e22','#1abc9c','#2c3e50'];
+    for (var i = 0; i < g.ticker.length; i++) {
+      html += '<span class="gs-tick" style="background:' + nc[i % nc.length] + '">' + g.ticker[i] + '</span>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+/* 구슬 레이스 마블 표시 */
+function makeMarblesHtml() {
+  var colors = ['#bdc3c7','#3498db','#e74c3c','#e74c3c','#f39c12','#bdc3c7','#e74c3c','#2ecc71'];
+  var h = '<div class="gs-ticker">';
+  for (var i = 0; i < colors.length; i++) {
+    h += '<span class="gs-tick" style="background:' + colors[i] + ';width:12px;height:12px;border-radius:50%;padding:0;min-width:12px"></span>';
+  }
+  h += '</div>';
+  return h;
+}
+
+/* 스핀 도트 표시 (얼음 낚시) */
+function makeSpinHtml() {
+  var dots = ['#fff','#aaa','#f0b429','#3498db','#aaa','#aaa','#3498db','#aaa','#aaa'];
+  var h = '<div class="gs-ticker" style="justify-content:center;gap:5px">';
+  for (var i = 0; i < dots.length; i++) {
+    h += '<span style="width:8px;height:8px;border-radius:50%;background:' + dots[i] + ';display:inline-block;flex-shrink:0"></span>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function buildGsGrid() {
+  var grid = document.getElementById('gs-grid');
+  if (!grid) return;
+  var html = '';
+  for (var i = 0; i < gsGames.length; i++) {
+    var g = gsGames[i];
+    var badge = '';
+    if (g.badge === 'new') badge = '<span class="card-badge badge-new">신규</span>';
+    else if (g.badge === 'exclusive') badge = '<span class="card-badge badge-exclusive">독점</span>';
+
+    var tickerHtml = '';
+    if (g.marbles) tickerHtml = makeMarblesHtml();
+    else if (g.spin) tickerHtml = makeSpinHtml();
+    else tickerHtml = makeGsTicker(g);
+
+    html += '<div class="gs-card">' +
+      '<div class="gs-thumb ' + g.bg + '">' +
+        '<span class="gs-main-icon' + (g.icon.length > 3 ? ' sm' : '') + '">' + g.icon + '</span>' +
+        tickerHtml +
+        badge +
+        '<button class="card-fav">&#9825;</button>' +
+        '<div class="gs-ov"></div>' +
+        '<button class="gs-play">&#9654; 플레이</button>' +
+      '</div>' +
+      '<div class="gs-info">' +
+        '<div class="gs-name">' + g.name + '</div>' +
+        '<div class="gs-meta">' +
+          '<span class="gs-bet">' + g.bet + '</span>' +
+          (g.p > 0 ? '<span>&#128101; ' + g.p.toLocaleString() + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+
+/* ROULETTE DATA */
+var rlGames = [
+  // Row 1
+  { bg:'rls-green',  dealer:'',    badge:'exclusive', salon:false, name:'로투스 룰렛 🇻🇳',          bet:'₩1,000',  p:5,    ticker:['28','35','16','16','15','22','30','2','0','29','35','30','22'],           hl:[]        },
+  { bg:'rls-dark',   dealer:'',    badge:'none',      salon:false, name:'파이어볼 룰렛',              bet:'₩400',    p:64,   ticker:['33','3','2','4','2','17','4','9','15','20','26','6'],                     hl:[2,6]     },
+  { bg:'rls-green',  dealer:'',    badge:'none',      salon:false, name:'슈퍼 스피드 룰렛',           bet:'₩200',    p:100,  ticker:[],                                                                        hl:[]        },
+  { bg:'rls-slate',  dealer:'',    badge:'none',      salon:false, name:'스피드 자동 룰렛',           bet:'₩200',    p:254,  ticker:['22','20','23','19','31','5','34','30','28','1','7','28','12'],            hl:[]        },
+  { bg:'rls-dark',   dealer:'',    badge:'none',      salon:false, name:'오토 룰렛',                  bet:'₩200',    p:1318, ticker:['11','33','24','31','17','16','30','21','23','36','17','23','22'],          hl:[]        },
+  // Row 2
+  { bg:'rls-green',  dealer:'',    badge:'none',      salon:false, name:'오토 룰렛 VIP',              bet:'₩200',    p:234,  ticker:['26','34','31','31','27','36','23','27','2','10','28','9','17'],            hl:[]        },
+  { bg:'rls-slate',  dealer:'',    badge:'none',      salon:false, name:'자동 라이트닝 룰렛',          bet:'₩200',    p:107,  ticker:['28','33','18','21','100x','21','10','21','32','0','31','3','13'],         hl:[4]       },
+  { bg:'rls-dark',   dealer:'👩🏻', badge:'none',     salon:false, name:'XXXtreme 라이트닝 룰렛',     bet:'₩400',    p:883,  ticker:['4','18','24','30','1','100x','35','26','25','23','24','100x','14'],       hl:[5,11]    },
+  { bg:'rls-gold',   dealer:'',    badge:'none',      salon:false, name:'골드 볼트 룰렛',             bet:'₩400',    p:181,  ticker:['18','24','50x','50x','27','15','26','22','17','100x','50x','15','11'],    hl:[2,3,9,10]},
+  { bg:'rls-dark',   dealer:'👩🏽', badge:'none',     salon:false, name:'더블 볼 룰렛',               bet:'₩400',    p:21,   ticker:['8','26','5','29','14','1','13','9','12','3','2','27'],                    hl:[]        },
+  // Row 3
+  { bg:'rls-dark',   dealer:'👩🏻', badge:'none',     salon:false, name:'라이트닝 룰렛',              bet:'₩400',    p:893,  ticker:['7','29','16','27','2','18','100x','21','32','11','2','23'],               hl:[6]       },
+  { bg:'rls-red',    dealer:'',    badge:'none',      salon:false, name:'레드 도어 룰렛',             bet:'₩400',    p:634,  ticker:['7','13','11','14','27','32','12','32','17','35','100x','100x','8'],        hl:[10,11]   },
+  { bg:'rls-green',  dealer:'🧑🏻', badge:'none',     salon:false, name:'아메리칸 룰렛',              bet:'₩400',    p:64,   ticker:['15','16','9','24','5','18','24','35','10','30','11','21','33'],            hl:[]        },
+  { bg:'rls-dark',   dealer:'',    badge:'none',      salon:false, name:'Dynasty 룰렛',               bet:'₩1,000',  p:11,   ticker:['7','20','27','33','23','18','5','27','33','8','28','15','35'],             hl:[]        },
+  { bg:'rls-gold',   dealer:'👩🏻', badge:'none',     salon:false, name:'VIP 룰렛',                   bet:'₩1,000',  p:63,   ticker:['14','36','0','32','36','3','11','26','2','10','11','32','23'],             hl:[]        },
+  // Row 4
+  { bg:'rls-maroon', dealer:'👩🏽', badge:'none',     salon:false, name:'룰렛',                       bet:'₩1,000',  p:200,  ticker:['21','36','29','23','6','4','0','7','6','6','12','1','26'],                hl:[]        },
+  { bg:'rls-green',  dealer:'🧑🏻', badge:'none',     salon:false, name:'스피드 룰렛',                bet:'₩1,000',  p:84,   ticker:['13','21','4','22','25','8','20','14','16','16','0','21','0'],              hl:[]        },
+  { bg:'rls-teal',   dealer:'👩🏽', badge:'none',     salon:false, name:'이머지브 룰렛',              bet:'₩1,000',  p:672,  ticker:['17','9','22','21','34','4','12','11','18','15','20','6','25'],             hl:[]        },
+  { bg:'rls-navy',   dealer:'🧑🏻', badge:'none',     salon:false, name:'축구 스튜디오 룰렛',          bet:'₩1,000',  p:57,   ticker:['26','17','28','19','20','5','13','15','10','6','4','25','0'],             hl:[]        },
+  { bg:'rls-gold',   dealer:'👩🏻', badge:'none',     salon:true,  name:'살롱 프라이빗 룰렛',          bet:'₩10만',   p:0,    ticker:['36','22','35','32','28','9','16','15','28','26','15','13','26'],           hl:[]        },
+  // Row 5
+  { bg:'rls-green',  dealer:'',    badge:'none',      salon:true,  name:'살롱 프라이빗 오토 룰렛 A',  bet:'₩10만',   p:0,    ticker:['6','1','30','36','19','1','0','14','31','35','21','30','19'],             hl:[]        },
+  { bg:'rls-green',  dealer:'',    badge:'none',      salon:true,  name:'살롱 프라이빗 오토 룰렛 B',  bet:'₩10만',   p:0,    ticker:['21','4','7','16','17','4','0','18','33','3','16','20'],                   hl:[]        },
+  { bg:'rls-slate',  dealer:'',    badge:'none',      salon:false, name:'스페인어 룰렛 🇪🇸',          bet:'₩200',    p:403,  ticker:['25','30','28','26','8','2','4','0','5','33','26','32','9'],               hl:[]        },
+  { bg:'rls-dark',   dealer:'',    badge:'none',      salon:false, name:'라이브 룰렛 🇧🇷',            bet:'₩400',    p:277,  ticker:['1','28','13','6','25','10','1','0','18','29','20','2','34'],              hl:[]        },
+  { bg:'rls-maroon', dealer:'👩🏻', badge:'none',     salon:false, name:'라이브 룰렛 🇪🇸',            bet:'₩1,000',  p:114,  ticker:['2','9','25','12','19','31','25','17','17','16','30','23','3'],            hl:[]        },
+  // Row 6
+  { bg:'rls-green',  dealer:'🧑🏻', badge:'none',     salon:false, name:'스피드 룰렛 라이브 🇪🇸',     bet:'₩1,000',  p:45,   ticker:['27','21','8','23','3','18','14','35','26','11','7','34','3'],             hl:[]        },
+  { bg:'rls-dark',   dealer:'👩🏻', badge:'exclusive', salon:false, name:'엠퍼러 룰렛 🇨🇳',           bet:'₩1,000',  p:25,   ticker:['5','14','36','31','10','17','14','21','36','11','22','5','35'],           hl:[]        },
+];
+
+/* 룰렛 숫자 색상 */
+var RL_COLOR = {'0':'#2ecc71','00':'#2ecc71'};
+var reds = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+for (var ri = 1; ri <= 36; ri++) {
+  RL_COLOR[String(ri)] = (reds.indexOf(ri) > -1) ? '#e74c3c' : '#2c3e50';
+}
+
+function makeRlWheelHtml(bg) {
+  return '<div class="rl-scene ' + bg + '">' +
+    '<div style="position:relative;width:68%;padding-bottom:68%">' +
+      '<div style="position:absolute;inset:0;border-radius:50%;border:5px solid rgba(255,255,255,0.18);box-shadow:0 0 30px rgba(0,0,0,0.9),inset 0 0 20px rgba(0,0,0,0.7);overflow:hidden">' +
+        '<div class="rl-wheel-segs" style="position:absolute;inset:0;border-radius:50%"></div>' +
+        '<div style="position:absolute;inset:10%;border-radius:50%;border:3px solid rgba(255,255,255,0.12);background:radial-gradient(circle,#1a1a1a,#0a0a0a);box-shadow:inset 0 0 15px rgba(0,0,0,0.8)">' +
+          '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:26%;height:26%;border-radius:50%;background:radial-gradient(circle,#d4a843,#8b6914);border:2px solid rgba(255,255,255,0.3);box-shadow:0 0 8px rgba(200,169,80,0.5)"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function makeRlTickerHtml(nums, hl) {
+  if (!nums || nums.length === 0) return '';
+  var html = '<div class="rl-ticker">';
+  for (var i = 0; i < nums.length; i++) {
+    var n = nums[i];
+    var bg = RL_COLOR[n] || '#e74c3c';
+    var hlCls = (hl && hl.indexOf(i) > -1) ? ' hl' : '';
+    html += '<span class="rl-tick' + hlCls + '" style="background:' + bg + '">' + n + '</span>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function buildRlGrid() {
+  var grid = document.getElementById('rl-grid');
+  if (!grid) return;
+  var html = '';
+  for (var i = 0; i < rlGames.length; i++) {
+    var g = rlGames[i];
+    var badge = '';
+    if (g.badge === 'exclusive') badge = '<span class="card-badge badge-exclusive">독점</span>';
+    else if (g.badge === 'new') badge = '<span class="card-badge badge-new">신규</span>';
+    var salonBadge = g.salon ? '<span class="card-badge badge-salon">살롱 프라이빗</span>' : '';
+    var dealerHtml = g.dealer ? '<div class="rl-dealer">' + g.dealer + '</div>' : '';
+    var tickerHtml = makeRlTickerHtml(g.ticker, g.hl);
+    var wheelHtml = makeRlWheelHtml(g.bg);
+
+    html += '<div class="rl-card">' +
+      '<div class="rl-thumb">' +
+        wheelHtml +
+        dealerHtml +
+        tickerHtml +
+        badge +
+        salonBadge +
+        '<button class="card-fav">&#9825;</button>' +
+        '<div class="rl-ov"></div>' +
+        '<button class="rl-play">&#9654; 플레이</button>' +
+      '</div>' +
+      '<div class="rl-info">' +
+        '<div class="rl-name">' + g.name + '</div>' +
+        '<div class="rl-meta">' +
+          '<span class="rl-bet">' + g.bet + '</span>' +
+          (g.p > 0 ? '<span>&#128101; ' + g.p.toLocaleString() + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+
+/* POKER DATA */
+var pkGames = [
+  // Row 1 - 스크린샷 기준 좌→우
+  { bg:'pks-gold',   table:'pkt-green',  dealer:'🧑🏿', logo:'THREE CARD\nPOKER',       logoColor:'#f0b429', ticker:null,                          badge:'none', name:'3카드 포커',              bet:'₩1,000', p:18  },
+  { bg:'pks-maroon', table:'pkt-maroon', dealer:'🧑🏽', logo:'SUPER\nANDAR BAHAR',      logoColor:'#90e0ef', ticker:['A','🔴','🟠','🔵','🔵','🔵','🔵','🟠','🟠','🟠','🟠'], badge:'none', name:'슈퍼 내부 외부',         bet:'₩1,000', p:194 },
+  { bg:'pks-teal',   table:'pkt-teal',   dealer:'🧑🏻', logo:'ULTIMATE\nTEXAS HOLDEM',  logoColor:'#f9c74f', ticker:null,                          badge:'none', name:'얼티밋 텍사스 홀덤',       bet:'₩1,000', p:58  },
+  { bg:'pks-gold',   table:'pkt-purple', dealer:'🧑🏽', logo:'TEEN\nPATTI',             logoColor:'#e63946', ticker:null,                          badge:'none', name:'카드 3장',                 bet:'₩1,000', p:24  },
+  { bg:'pks-gold',   table:'pkt-green',  dealer:'🧑🏻', logo:'CASINO\nHOLDEM',          logoColor:'#f0b429', ticker:null,                          badge:'none', name:'카지노 홀덤',              bet:'₩1,000', p:87  },
+  // Row 2
+  { bg:'pks-gold',   table:'pkt-green',  dealer:'🧑🏻', logo:'CARIBBEAN STUD\nPOKER',   logoColor:'#2ecc71', ticker:null,                          badge:'none', name:'캐리비안 스터드 포커',     bet:'₩1,000', p:16  },
+  { bg:'pks-teal',   table:'pkt-teal',   dealer:'👩🏻', logo:'TEXAS HOLDEM\nBONUS POKER',logoColor:'#f9c74f', ticker:null,                         badge:'none', name:'텍사스 홀덤의 보너스 포커', bet:'₩1,000', p:49  },
+  { bg:'pks-dark',   table:'pkt-dark',   dealer:'🧑🏻', logo:'2 HAND CASINO\nHOLDEM',   logoColor:'#e63946', ticker:null,                          badge:'none', name:'투 헨드 카지노 홀덤',      bet:'₩1,000', p:41  },
+];
+
+function buildPkGrid() {
+  var grid = document.getElementById('pk-grid');
+  if (!grid) return;
+  var html = '';
+  for (var i = 0; i < pkGames.length; i++) {
+    var g = pkGames[i];
+
+    // 뱃지
+    var badge = '';
+    if (g.badge === 'new') badge = '<span class="card-badge badge-new">신규</span>';
+    else if (g.badge === 'exclusive') badge = '<span class="card-badge badge-exclusive">독점</span>';
+
+    // 로고
+    var logoHtml = '';
+    if (g.logo) {
+      var parts = g.logo.split('\n');
+      logoHtml = '<div class="pk-logo">' +
+        '<div class="pk-logo-text" style="color:' + (g.logoColor || '#fff') + '">' + parts[0] + '</div>' +
+        (parts[1] ? '<div class="pk-logo-sub" style="color:' + (g.logoColor || '#fff') + '">' + parts[1] + '</div>' : '') +
+      '</div>';
+    }
+
+    // 안다르 바하르 티커
+    var tickerHtml = '';
+    if (g.ticker && g.ticker.length > 0) {
+      var tc = ['#2c3e50','#e74c3c','#e67e22','#3498db','#2ecc71','#9b59b6'];
+      tickerHtml = '<div class="pk-ticker">';
+      for (var j = 0; j < g.ticker.length; j++) {
+        var n = g.ticker[j];
+        var bg = (n === 'A') ? '#f0b429' : (n === '🔴') ? '#e74c3c' : (n === '🟠') ? '#e67e22' : (n === '🔵') ? '#3498db' : tc[j % tc.length];
+        tickerHtml += '<span class="pk-tick" style="background:' + bg + '">' + n + '</span>';
+      }
+      tickerHtml += '</div>';
+    }
+
+    // 황금 기둥 (포커 특유 인테리어)
+    var pillarsHtml = '<div class="pk-pillars"><div class="pk-pillar"></div><div class="pk-pillar"></div><div class="pk-pillar"></div><div class="pk-pillar"></div></div>';
+
+    html += '<div class="pk-card">' +
+      '<div class="pk-thumb">' +
+        '<div class="pk-scene ' + g.bg + '">' +
+          pillarsHtml +
+          '<div class="pk-table ' + g.table + '"></div>' +
+          '<div class="pk-table-text">POKER TABLE</div>' +
+          logoHtml +
+          '<div class="pk-dealer-wrap">' +
+            '<div class="pk-dealer-em' + (g.dealer.length > 3 ? ' sm' : '') + '">' + g.dealer + '</div>' +
+          '</div>' +
+          tickerHtml +
+        '</div>' +
+        badge +
+        '<button class="card-fav">&#9825;</button>' +
+        '<div class="pk-ov"></div>' +
+        '<button class="pk-play">&#9654; 플레이</button>' +
+      '</div>' +
+      '<div class="pk-info">' +
+        '<div class="pk-name">' + g.name + '</div>' +
+        '<div class="pk-meta">' +
+          '<span class="pk-bet">' + g.bet + '</span>' +
+          (g.p > 0 ? '<span>&#128101; ' + g.p.toLocaleString() + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+
+/* 레드 배론 카드 공통 빌더 */
+function makeRedBaronCard(tickerNums, firstNum, bet, players, badge) {
+  var badgeHtml = badge ? '<span class="card-badge badge-new">신규</span>' : '';
+
+  /* 씬: 어두운 밤하늘 + 비행기 */
+  var sceneHtml =
+    '<div class="sm-thumb">' +
+      '<div style="position:relative;width:100%;height:100%;background:linear-gradient(160deg,#080a18 0%,#0c1028 45%,#060810 100%);overflow:hidden">' +
+        /* 별 효과 */
+        '<div style="position:absolute;inset:0;background:radial-gradient(1px 1px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 60% 15%,#fff,transparent),radial-gradient(1px 1px at 80% 50%,#fff,transparent),radial-gradient(1px 1px at 40% 70%,rgba(255,255,255,0.5),transparent),radial-gradient(1px 1px at 10% 80%,rgba(255,255,255,0.4),transparent);opacity:0.6"></div>' +
+        /* 배율 표시 */
+        '<div style="position:absolute;top:18%;left:8%;font-family:Bebas Neue,sans-serif;font-size:28px;color:#f0b429;text-shadow:0 0 20px rgba(240,180,41,0.6);letter-spacing:2px">1050x</div>' +
+        /* 비행기 이모지 */
+        '<div style="position:absolute;right:10%;top:50%;transform:translateY(-50%);font-size:52px;filter:drop-shadow(0 4px 16px rgba(230,57,70,0.7));transform:translateY(-50%) rotate(-20deg)">&#9992;&#65039;</div>' +
+        /* RED BARON 텍스트 */
+        '<div style="position:absolute;right:8%;top:22%;font-family:Bebas Neue,sans-serif;font-size:18px;color:#e63946;letter-spacing:2px;text-shadow:0 2px 8px rgba(0,0,0,0.8)">RED<br>BARON</div>' +
+        /* 배율 티커 */
+        '<div class="sm-ticker">' +
+          '<span class="sm-tick hi">' + firstNum + '</span>' +
+          (function() {
+            var th = '';
+            for (var i = 0; i < tickerNums.length; i++) {
+              th += '<span class="sm-tick dim">' + tickerNums[i] + '</span>';
+            }
+            return th;
+          })() +
+        '</div>' +
+        badgeHtml +
+        '<button class="card-fav">&#9825;</button>' +
+        '<div class="sm-ov"></div>' +
+        '<button class="sm-play">&#9654; 플레이</button>' +
+      '</div>' +
+    '</div>';
+
+  return '<div class="sm-card">' +
+    sceneHtml +
+    '<div class="sm-info">' +
+      '<div class="sm-name">' + (badge ? '1인칭 ' : '') + '레드 배론</div>' +
+      '<div class="sm-meta">' +
+        '<span class="sm-bet">' + bet + '</span>' +
+        '<span>&#128101; ' + players + '</span>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function buildInstantGrid() {
+  var grid = document.getElementById('instant-grid');
+  if (!grid) return;
+  /* 인스턴트 게임: 1인칭 레드 배론 1개 */
+  grid.innerHTML = makeRedBaronCard(
+    ['14.2','1.48','1.74','6.34','13.8','2.86'],
+    '1.83', '₩200', '122', true
+  );
+}
+
+function buildFirstPersonGrid() {
+  var grid = document.getElementById('firstperson-grid');
+  if (!grid) return;
+  /* 1인칭: 1인칭 레드 배론 1개 */
+  grid.innerHTML = makeRedBaronCard(
+    ['10.3','1.83','14.2','1.48','1.74','6.34'],
+    '1.00', '₩200', '138', true
+  );
+}
+
+
+/* DROPDOWN MENU */
+function toggleMenu(e) {
+  e.stopPropagation();
+  var menu = document.getElementById('dropdown-menu');
+  var backdrop = document.getElementById('menu-backdrop');
+  var isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    backdrop.classList.remove('open');
+  } else {
+    menu.classList.add('open');
+    backdrop.classList.add('open');
+  }
+}
+
+function closeMenu() {
+  var menu = document.getElementById('dropdown-menu');
+  var backdrop = document.getElementById('menu-backdrop');
+  menu.classList.remove('open');
+  backdrop.classList.remove('open');
+}
+
+function toggleFullscreenMenu() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen && document.exitFullscreen();
+  }
+  closeMenu();
+}
+
+/* ESC 키로도 닫기 */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMenu();
+});
+
+/* INIT */
+buildBacGrid();
+buildChoiceGrid();
+buildBestGrid();
+buildBjGrid();
+buildBoardGrid();
+buildHiloGrid();
+buildGsGrid();
+buildRlGrid();
+buildPkGrid();
+buildInstantGrid();
+buildFirstPersonGrid();
+fillAllBeads();
+fillChoiceBeads();
+fillBestBeads();
+fillBoardBeads();
+fillHiloBeads();
+</script>
+
+<!-- 메뉴 백드롭 -->
+<div class="menu-backdrop" id="menu-backdrop" onclick="closeMenu()"></div>
+
+<!-- 드롭다운 메뉴 -->
+<div class="dropdown-menu" id="dropdown-menu">
+  <div class="dropdown-item" onclick="toggleFullscreenMenu()">
+    <span class="dropdown-icon">&#9633;</span>
+    <span class="dropdown-label">전체화면</span>
+  </div>
+  <div class="dropdown-item" onclick="closeMenu()">
+    <span class="dropdown-icon">&#127760;</span>
+    <span class="dropdown-label">언어</span>
+    <span class="dropdown-right">한국어 <span class="dropdown-chevron">›</span></span>
+  </div>
+  <div class="dropdown-item" onclick="closeMenu()">
+    <span class="dropdown-icon">&#9881;&#65039;</span>
+    <span class="dropdown-label">설정</span>
+  </div>
+  <div class="dropdown-item" onclick="goHome();closeMenu()">
+    <span class="dropdown-icon">&#127968;</span>
+    <span class="dropdown-label">홈</span>
+  </div>
+</div>
+</body>
+</html>
